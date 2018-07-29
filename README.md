@@ -28,3 +28,7 @@ https://github.com/HanXiaoyang/Feature-engineering
 https://github.com/wanlida/ML-examples  
 3. predict-next-purchase  
 https://github.com/Featuretools/predict-next-purchase
+
+## 教程
+1. automated-feature-engineering  
+https://github.com/WillKoehrsen/automated-feature-engineering
