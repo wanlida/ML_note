@@ -27,7 +27,9 @@ https://github.com/HanXiaoyang/Feature-engineering
 2. ML-examples  
 https://github.com/wanlida/ML-examples  
 3. predict-next-purchase  
-https://github.com/Featuretools/predict-next-purchase
+https://github.com/Featuretools/predict-next-purchase  
+4.Feature_Engineering_and_XGBoost_Parameter_Tuning  
+https://github.com/HanXiaoyang/Feature_Engineering_and_XGBoost_Parameter_Tuning
 
 ## 教程
 1. automated-feature-engineering  
@@ -38,4 +40,6 @@ https://github.com/csuldw/MachineLearning
 4.tensorflow-DeepFM  
 https://github.com/ChenglongChen/tensorflow-DeepFM  
 5.learn python  
-https://github.com/xianhu/LearnPython
+https://github.com/xianhu/LearnPython  
+6.Sklearn 与 TensorFlow 机器学习实用指南  
+https://github.com/apachecn/hands_on_Ml_with_Sklearn_and_TF
