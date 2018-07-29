@@ -11,3 +11,5 @@ https://github.com/duxuhao/JData-2018
 
 apachenCN
 https://github.com/apachecn/organization
+某大佬，天池大数据竞赛的代码
+https://github.com/PnYuan/Tianchi-BigData
