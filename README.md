@@ -6,7 +6,7 @@ https://elitedatascience.com/python-machine-learning-tutorial-scikit-learn?spm=a
 
 3.apachenCN    https://github.com/apachecn/organization
 
-feature-engineering-book       https://github.com/alicezheng/feature-engineering-book
+4.feature-engineering-book       https://github.com/alicezheng/feature-engineering-book
 ## 比赛代码收集
 1. 某大佬，天池大数据竞赛的代码  
 https://github.com/PnYuan/Tianchi-BigData  
