@@ -42,4 +42,6 @@ https://github.com/ChenglongChen/tensorflow-DeepFM
 5.learn python  
 https://github.com/xianhu/LearnPython  
 6.Sklearn 与 TensorFlow 机器学习实用指南  
-https://github.com/apachecn/hands_on_Ml_with_Sklearn_and_TF
+https://github.com/apachecn/hands_on_Ml_with_Sklearn_and_TF  
+7.featuretools  
+https://github.com/Featuretools/featuretools
