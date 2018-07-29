@@ -1,0 +1,264 @@
+* 课程回顾：
+	* js语法
+		* js的动态函数和匿名函数
+			* js动态函数	Function	new Function();
+			* 匿名函数：没有名称的函数，起个名称
+				var add = function(){
+				
+				};
+				
+		* js中全局变量和局部变量
+			* 全部变量：定义<script>标签中的变量，在页面的任意位置上都能拿到。
+			* 局部变量：定义在方法内部的变量
+			
+		* js的对象和API
+			* String对象
+				* 属性：length长度
+				* 方法：
+					* 和HTML相关方法
+						* bold()	粗体
+						* fontcolor()	字体颜色
+						* sup()		上标
+						* sub()		下标
+						
+					* 和java中String类似的方法
+						* charAt()		返回指定位置的字符
+						* indexof()		返回字符的位置
+						* substring(start,stop)	截取字符串
+						* substr(start,length)		截取字符串
+					
+			* Array数组
+				* 声明数组	
+					* var arr = [22];
+					* var arr = new Array(4或者"abc");
+					
+				* 方法：
+					* concat()		链接数组或者元素
+					* pop()			删除最后一个元素，返回
+					* push()		向末尾添加一个元素，返回长度。
+					* sort()		排序
+					
+			* Date对象
+				* var date = new Date();	当前时间
+				* 方法：
+					* toLocaleString()		显示当地日期格式
+					* getFullYear()			获取年份
+					* getMonth()			获取月份(0-11)	+1
+					* getDate()				几号
+					* getDay()				星期几
+					
+					* getTime()				毫秒值
+					* setTime()				根据毫秒值设置时间
+					* Date.parse();			可以字符串，返回是毫秒值
+					
+			* Math数学
+				* ceil()	上舍入
+				* floor()	下舍入
+				* round()	四舍五入
+				* random()	随机数
+				
+			* RegExp对象
+				* new RegExp("")
+				* var reg = /^表达式$/;（记住）
+				
+				* reg.test(string);（记住）	如果匹配返回true，如果匹配不成功返回false。
+				
+			* 全局函数
+				* eval()		解析字符串，执行js的代码。
+				* isNaN()		判断是否是非数字值
+				* parseInt()	
+				
+	* BOM	浏览器对象模型
+		* winodw			窗口对象
+			* alert()		提示框
+			* confirm()		询问框
+			* setInterval("run()",3000)		每隔3秒执行run方法，返回唯一的id值
+			* setTimeout("run()",3000);		3秒后执行run方法，返回唯一的id值
+			
+			* 清除定时器
+				* clearInterval(id)	
+				* clearTimeout(id)
+				
+			* open("","","")	弹出新的窗口	
+			* close()			关闭窗口
+		
+		* navigator			和浏览器版本相关
+			* 属性
+		* history			和历史相关
+			* back()		上一页
+			* forward()		下一页
+			* go(1或者-1)	
+		* location			和地址相关
+			* href=""	获取和设置链接
+	
+===============================================================================================================================
+	
+	* DOM	文档对象模型
+		* Document	Object	Model
+		* 文档：标记型文档	（HTML/XML）
+		* 对象：封装属性和行为（方法）
+		* 模型：共性特征的体现
+		
+		* DOM解析HTML
+			* 通过DOM的方法，把HTML全部（元素（标签）、文本、属性）都封装成了对象。
+				<span id="spanId">文本</span>
+				
+			* DOM想要操作标记型文档先解析。（解析器）
+				* DOM解析HTML（浏览器就可以HTML）
+				
+			* 浏览器DOM解析HTML？
+				
+				
+		* DOM的三个级别：
+			
+		* DHTML不是一种编程语言。
+			* html		：封装数据。	<span>展示给用户的数据</span>
+			* css		：设置样式（显示效果）
+			* dom		：操作HTML（解析HTML）
+			* js		：提供逻辑（判断语句，循环语句）
+			
+			
+		* Document：代表整个文档。
+			* 方法：
+				getElementById("id的值");			通过元素的id的属性获取元素（标签）对象。
+				getElementsByName("name属性值");		通过名称获取元素对象的集合（返回数组）
+				getElementsByTagName("标签名称");	通过标签名称获取元素对象的集合（返回数组）
+				
+				* write("文本的内容（html的标签）")		把文本内容写到浏览器上。
+				
+				* createElement("元素名称");		创建元素对象
+				* createTextNode("文本内容")		创建文本对象
+				
+				* appendChild("子节点")				添加子节点
+				
+				<span id=""></span>
+				
+				
+		* Element对象
+			* 获取元素对象
+				* getAttribute("属性名称");	获取属性的值
+				* setAttribute("属性名称","属性的值");	设置或者修改属性的值
+				* removeAttribute("属性名称");		删除属性
+				
+			* 获取元素下的所有子节点（*****）
+				* ul.getElementsByTagName();
+				
+				
+		* Node：节点对象
+			* nodeName		：节点名称
+			* nodeType		：节点类型
+			* nodeValue		：节点的值
+			
+			* parentNode	获取父节点（永远是一个元素节点）
+			
+			IE6-8 ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? IE9-11 Chrome FireFox
+			firstChild 第一个节点 ? ? ? ? ? ? ? ? firstElementChild?第一个节点
+			lastChild最后一个节点、 ? ? ? ? ? ? ? lastElementChild 最后一个节点
+			nextSibling 下一同级节点 ? ? ? ? ? ? ?nextElementSibling?下一同级节点
+			previousSibling 上一同级节点 ? ? ? ? ?previousElementSibling?上一同级节点
+			
+			<ul>
+				<li>北京</li>
+			</ul>	
+			
+			* 如果通过ul获取北京的子节点，使用是	ul.firstElementChild;	获取北京的子节点（IE9-11 Chrome FireFox）
+				* 但是如果IE6-8，需要使用firstChild;	
+				
+			<span id="spanId">
+				文本内容
+			</span>	
+			
+			* 使用span的标签获取span中间的文本内容（也是对象）,需要使用firstChild;（不管是什么浏览器）
+			
+			
+			* 方法
+				* hasChildNodes()		检查是否包含子节点
+				* hasAttributes()		检查是否包含属性
+				
+				* appendChild(node)			父节点调用，在末尾添加子节点
+				* insertBefore(new,old)		父节点调用，在指定节点之前添加子节点
+				* replaceChild(new,old)		父节点调用，替换节点
+				* removeChild(node)			父节点调用,删除节点
+				
+				* cloneNode(boolean)		不是父节点调用,复制节点
+					* boolean	：如果是true，复制子节点
+								：如果是false，不复制子节点，默认是false
+				
+		
+		* innerHTML	：获取和设置文本内容。
+			* innerHTML属性：
+				* 获取文本内容
+				* 设置文本内容
+				
+			* 事件：
+				onclick		点击事件
+				onload		加载事件
+				onfocus		获取焦点事件
+				onblur		失去焦点事件
+				
+			
+		* 全选/全不选/反选的练习
+			<input type="checkbox" />
+			* 指定默认值：checked	只要出现在<input type="checkbox" />,对号就勾上了。
+			
+		
+		* 鼠标移动的事件
+			onmousemove
+			onmouseout			
+			onmouseover			
+			
+		* 鼠标点击事件（*****）
+			onclick			单击
+			ondblclick		双击
+			
+		* 加载和卸载
+			* onload（*****）		加载
+			* onunload		卸载
+			
+		* 获取焦点和失去焦点（*****）
+			* onfocus		获取焦点
+			* onblur		失去焦点
+			
+		* 键盘
+			* onkeyup		按下抬起
+			
+		* 改变事件（*****）
+			* onchange
+			
+			
+		* 控制表单的提交（*****）	
+			onsubmit
+		
+			
+	* 作业：
+		* insertBefore(new,old)		在指定节点之前添加子节点
+		* 在上海之前添加子节点
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+

@@ -1,0 +1,9 @@
+服务器下载地址： http://httpd.Apache.org
+
+启动 httpd
+可以使用控制程序，或操作系统的服务控制台（services.msc）
+进入cmd  
+启动服务  net start Apache2.2
+停止服务  net stop Apache2.2
+
+可以查看系统打开的端口号，确认httpd是否已经启动：netstat

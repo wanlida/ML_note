@@ -1,0 +1,382 @@
+* 课程回顾：
+	* JSP的入门
+		* JSP是服务器技术。	java server pages	
+		* JSP可以写大代码
+			* java+HTML+JSP自己代码
+		* 需要在JSP
+			<%! %>		成员方法、成员变量
+			<%= %>		输出内容
+			<%  %>		局部变量，语句
+			
+		* JSP的原理：JSP -- 翻译Servlet文件 -- 编译.class文件 -- 执行
+			* 在tomcat/work/翻译Servlet的文件
+		
+	* 两个会话的技术（*****）
+		* cookie
+			* cookie的api
+			* cookie的构造方法	new Cookie("cookie的名称","cookie的值");
+			* 获取cookie的名称：getName();
+			* 获取cookie的值：getValue();
+			* 会话级别cookie
+			* 持久的cookie
+				* setMaxAge(int 秒)	设置有效时间
+			* setPath()	设置有效路径	
+				* 默认的路径	/day11		/day11/servet
+				* 访问其他的web资源		http://localhost/day11/jsp/1.jsp	
+			* setDomain()	设置有效域名
+			* 持久的cookie失效	setMaxAge(0)	有效路径相同
+			
+			* request.getCookies()	返回cookie数组
+			* response.addCookie(new Cookie())	回写cookie
+			
+		* session（服务器端）
+			* 为每个浏览器创建独享的session空间。分配jsessionid	，基于cookie。
+			* 获取session对象：request.getSession()	第一次访问，创建session。
+			* HttpSession对象
+				* getId();
+				* invalidate()	销毁session
+				
+			
+==========================================================================================================
+	* session（*****）
+		* session的追踪（了解）
+		* session的创建和销毁
+			* 第一次访问资源，调用request.getSession()，创建session
+			* 销毁
+				* 非正常关闭服务器（）
+				* session的过期，默认是30分钟。
+					<session-config>
+						<session-timeout>30</session-timeout>
+					</session-config>
+				* 调用session.invalidate()	手动销毁session
+				
+		* session的域对象
+			ServlerContext	：代表整个web应用，数据库链接
+			session			：一次会话，存放个人的信息。
+			request			：一次请求，存放错误处理。
+			
+	* JSP语法
+		* JSP的设置
+			* 设置JSP文件的打开方式：window -- 选项 -- General -- Editors -- 文件关联 -- *.jsp -- 选择MyEclipse JSP Editor -- default
+			* 设置JSP文件的编码：window -- 搜索JSP -- 找到JSP -- 选择UTF-8 -- OK
+			
+		
+		* 脚本元素
+			<%! %>		成员方法、成员变量
+			<%= %>		输出内容
+			<%  %>		局部变量，语句
+			
+		* JSP页面的注释		
+			* HTML的注释	<!-- -->	JSP文件的阶段存在，在翻译成java文件也存在，	在页面存在
+			* JAVA的注释	JSP文件的阶段存在，在翻译成java文件也存在，	在页面不存在
+				<%
+					// 		单行
+					/**/	多行
+					/**
+					*		文档
+					*/
+				%>
+			* JSP的注释		<%-- JSP的注释 --%>		之后存在JSP文件的阶段
+			
+		* JSP的指令元素
+			* 语法：<%@ 指令元素 属性名=属性值  %>
+			* page		：设置JSP的属性
+				* 注意：import属性可以出现多次，其他属性只能出现一次。
+				* 属性：
+					* language	：JSP文件允许嵌入的语言。只支持一种JAVA语言。（不需要改变）
+					* extends	：JSP翻译翻译Servlet文件，servlet继承的类。（不需要改变）
+					* session	：默认值是true，可以直接使用session。设置false，不能直接使用。
+					* import	：引入java的jar包（使用多次）
+					* buffer	：设置缓冲区的大小	默认8kb
+					* aotoFlush	：设置默认刷新缓冲区（不要修改）	
+					* errorPage		：指定错误页面
+					* isErrorPage	：设置值，可以是exception对象，设置true，使用exception，设置不能使用exception对象
+					* contentType	：服务器端输出所有内容采用编码。
+					* pageEncoding	：JSP翻译成Servlet文件时采用的编码。
+					* isELIgnored	：是否忽略EL表达式（false，不忽略，true，忽略）
+					
+				* 重点：
+					* session	import	contentType	 pageEncoding	isELIgnored
+					
+			* include	：包含页面（页面布局）
+				* 语法：<%@ include file="要包含文件的地址（静态包含）" %>
+				* <%@ include file="/include/head.jsp" %>
+				
+			* taglib	：引入标签库文件（明天）
+				* 语法：<%taglib  %>
+				* 属性:
+					* uri		：引入标签库文件的名称
+					* prefix	：标签库的前缀名
+			
+		* 配置全局的错误页面
+			* 在web.xml中进行配置。
+			<error-page>
+				<error-code>404</error-code>
+				<location>/404.jsp</location>
+			  </error-page>
+			  
+			  <error-page>
+				<error-code>500</error-code>
+				<location>/500.jsp</location>
+			  </error-page>
+			
+			
+	* JSP的内置对象（9个）直接使用
+		request response session application out pageContext page config exception
+		
+		内置对象					真实的对象					方法
+		request						HttpServletRequest			setAttribute()	getAttribute()
+		response					HttpServletResponse			addCookie()		getWriter()
+		session						HttpSession					setAttribute()	getAttribute()
+		application					ServletContext				setAttribute()	getAttribute()
+		config						ServletConfig				getInitParameter()	getInitParameterNames()
+		
+		exception					Throwable					getMessage()
+		page						Object						（不使用对象）
+		out						JspWriter					write()		print()
+		pageContext					PageContext					setAttribute()	getAttribute()
+		
+		* exception
+			* 和异常有关的
+			* 前提条件：isErrorPage="true"，才能使用exception对象。
+		* page	
+			* 当前页面的对象。
+		* out对象
+			JspWriter			  PrintWriter  response.getWriter()
+			
+			<%= "HELLO" %>
+			<% out.print("AAAA"); %>
+			<% response.getWriter().print("BBBB"); %>
+			<% out.print("CCCC"); %>
+			* 输出结果：
+			
+		* pageContext对象
+			* 域对象
+				* 自己存取值
+				* 向其他的域存取值。
+					* setAttribute(String name, Object value, int scope) 
+					* getAttribute(String name, int scope) 
+					* findAttribute(String name) 
+					
+			* 可以获取其他8个对象。
+				* 编写框架或者通用性较高代码。
+				
+		* 在JSP的时候（4个域对象）
+			ServletContext	整个web应用
+			session			一次会话
+			request			一次请求
+			pageContext		当前页面
+			
+			
+	* JSP的标签（JSP的动作）
+		<jsp:forward>	：转发
+			属性：page	要转发的页面
+		<jsp:param>		：传递参数	
+			属性：name：参数名称	value：参数值
+		<jsp:include>  	：页面的包含（动态包含）
+			属性：page	要包含的页面
+	
+	
+	* JavaBean和内省（了解）有个工具类直接完成数据封装。	
+		* 什么是JavaBean？
+			* 定义
+				* 必须有一个无参的构造方法
+				* 属性私有化
+				* 私有化的属性必须通过public类型的方法暴露给其它程序，并且方法的命名也必须遵守一定的命名规范。
+				
+				public class User(){
+					private String username;
+					private String password;
+					public void setUsername(){
+						
+					}
+					public void getUsername(){
+						
+					}
+					public void getPassword(){
+						
+					}
+					public void getInfo(){
+						
+					}
+				}
+				
+			* 作用：封装数据。
+			
+		把数据封装到JavaBean中（JSP页面中完成的）
+		<jsp:useBean>
+		<jsp:setProperty> 
+		<jsp:getProperty> 
+		
+		<jsp:useBean id="u" class="cn.itcast.vo.User"></jsp:useBean>
+		<jsp:setProperty property="username" name="u"/>
+		<jsp:setProperty property="password" name="u"/>
+		或者
+		<jsp:setProperty property="*" name="u"/>
+
+		<jsp:getProperty property="username" name="u"/>
+		<jsp:getProperty property="password" name="u"/>
+		
+		
+	* 内省	（Introspector）
+		@Test
+		public void run() throws Exception{
+			User user = new User();
+			// 获取类的信息
+			BeanInfo info = Introspector.getBeanInfo(user.getClass());
+			// 获取属性的描述
+			PropertyDescriptor [] pds = info.getPropertyDescriptors();
+			// 循环遍历，获取属性的名称
+			for (PropertyDescriptor pd : pds) {
+				// System.out.println(pd.getName());
+				if(!"class".equals(pd.getName())){
+					// 获取写的方法
+					Method m = pd.getWriteMethod();
+					m.invoke(user, "admin");
+				}
+			}
+			
+			System.out.println(user.getUsername());
+			System.out.println(user.getPassword());
+		}
+	
+	* 导入jar包
+		* commons-beanutils-1.8.3.jar
+		* commons-logging-1.1.1.jar
+		
+	* 默认把字符串转换成日期类型
+		* 编写一个类，实现Converter接口。重写该方法。把字符串转换日期。
+		* 在封装数据之前进行注册。ConvertUtils.register(Converter converter, Class clazz) 	Date.class
+		
+		
+	* EL表达式
+		* 语法：${ }
+		* 获取（域对象中的）数据
+			<h4>获取域对象中的值</h4>
+			<%
+				pageContext.setAttribute("name", "黄海波");
+				request.setAttribute("name", "美美");
+			%>
+			
+			${ pageScope.name }
+			${ requestScope.name }
+
+
+			<h4>域中数组的值</h4>
+			<%
+				String [] arrs = {"美美","波波","东东","名名"};
+				request.setAttribute("arrs", arrs);
+			%>
+			${ arrs[2] }
+
+			<h4>域中集合的值</h4>
+			<%
+				List<String> list = new ArrayList<String>();
+				list.add("美美");
+				list.add("小凤");
+				list.add("芙蓉");
+				request.setAttribute("list", list);
+			%>
+			${ list[1] }
+
+			<h4>域中Map集合的值</h4>
+			<%
+				Map<String,String> map = new HashMap<String,String>();
+				map.put("aa", "美美");
+				map.put("bb", "小凤");
+				request.setAttribute("map", map);
+			%>
+			${ map.bb }
+
+
+			<h4>域中集合中有对象的值</h4>
+			<%
+				List<User2> uList = new ArrayList<User2>();
+				uList.add(new User2("banzhang","123"));
+				uList.add(new User2("美美","abc"));
+				request.setAttribute("uList", uList);
+			%>
+			${ uList[1].username }
+			
+			
+		* 执行运算
+			<h4>加法运算</h4>
+			${ n1 + n2 }
+
+			<h3>关系运算</h3>
+			<h4>大于</h4>
+			${ n1 > n2 }	${ n1 gt n2 }
+
+			<h4>小于</h4>
+			${ n1 < n2 }	${ n1 lt n2 }
+
+			<h4>等于</h4>
+			${ n1 == n2 }	${ n1 eq n2 }
+
+			<h4>不等于</h4>
+			${ n1 != n2 }	${ n1 ne n2 }
+
+			<h4>大于等于</h4>
+			${ n1 >= n2 }	${ n1 ge n2 }
+
+			<h4>小于等于</h4>
+			${ n1 <= n2 }	${ n1 le n2 }
+
+			<h3>逻辑运算</h3>
+			<h4>与</h4>
+			${ n1 > n2 && n3 > n4 }		${ n1 > n2 and n3 > n4 }
+
+			<h4>或</h4>
+			${ n1 > n2 || n3 > n4 }		${ n1 > n2 or n3 > n4 }
+
+			<h4>非</h4>
+			${ !(n1 > n2) }		${ not (n1 > n2) }
+			
+			
+		* 获取WEB开发中的对象
+			pageScope
+			requestScope
+			sessionScope
+			applicationScope
+			
+			param 			获取请求的参数	getParameter()
+			paramValues		获取请求的参数	getParameterValues()
+			
+			header			获取请求头的信息
+			headerValues	获取请求头的信息
+			
+			initParam		获取全局的初始化参数
+			cookie			获取cookie	
+				
+			pageContext
+			
+			<h4>EL的WEB对象</h4>
+			${ param.username }
+
+			<h4>获取请求头</h4>
+			${ header.referer }
+			
+			<h4>获取全局初始化参数</h4>
+			${ initParam.username }
+			
+			<h4>pageContext对象</h4>
+			${ pageContext.request.contextPath }	
+			
+			
+		* 调用java的方法（明天）
+			
+	
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			

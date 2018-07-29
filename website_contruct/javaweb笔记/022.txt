@@ -1,0 +1,403 @@
+今天内容:
+	1.上传(重点)
+	2.下载(了解)
+--------------------------------------------------	
+复习:
+	Filter
+		1.什么是Filter,有什么作用?
+			Filtet它叫做过滤器，它是javax.servlet.Filter接口。
+			可以通过Filter对象所有的web资源的请求与响应进行拦截操作。
+			
+		2.Filter的生命周期
+			1.init
+				1.只执行一次
+				2.这个方法的参数FilterConfig
+			2.doFilter
+				1.它是真正进行拦截操作的方法.
+				2.doFilter方法的第三个参数 FilterChain.doFilter(request,resposne);
+			3.destroy
+				销毁操作.
+		3.FilterConfig
+			它是Fitler的配置对象。
+			1.获取Filter名称   getFilterName();
+			2.获取初始化参数   getInitParameter(String)  getInitParameterNames();
+			3.获取ServletContext  getServletContext();
+			
+		4.关于Filter配置
+			1.映射
+				<filter>
+					<filter-name>
+					<filter-class>
+					<init-param>
+						<param-name>
+						<param-value>
+					</init-param>
+				</filter>
+				<filter-mapping>
+					<filter-name>
+					<url-pattern>
+				</filter-mapping>
+				
+			2.<servlet-name>
+					可以指定 一个servlet的名称，对这个servlet进行拦截。
+					
+			3.<dispatcher>
+				REQUEST
+				FORWARD
+				INCLUDE
+				ERROR
+				
+			4.url-pattern配置
+				1.完全匹配
+				2.目录匹配
+				3.扩展名匹配
+		-----------------------------------
+		Servlet规范中  Servlet   Filter  Listener 
+			servlet有初始化参数
+			Filter有初始化参数
+			Listener没有初始化参数,要使用，在开发中一般使用<context-param>servletContext的初始化参数.
+=====================================================================================================
+1.文件上传
+
+	问题:什么是文件上传？为什么使用文件上传?
+		就是将客户端资源，通过网络传递到服务器端。		
+		就是因为数据比较大，我们必须通过文件上传才可以完成将数据保存到服务器端操作.
+			
+		文件上传的本质:就是IO流的操作。
+			
+	演示:文件 上传应该 怎样操作?
+	
+		浏览器端:
+			1.method=post 只有post才可以携带大数据
+			2.必须使用<input type='file' name='f'>要有name属性
+			3.encType="multipart/form-data"
+		
+		服务器端:
+			request对象是用于获取请求信息。
+			它有一个方法  getInputStream(); 可以获取一个字节输入流，通过这个流，可以读取到
+			所有的请求正文信息.
+			
+		文件上传原理:
+			浏览器端注意上述三件事，在服务器端通过流将数据读取到，在对数据进行解析.
+			将上传文件内容得到，保存在服务器端，就完成了文件上传。
+			
+	在实际开发中，不需要我们进行数据解析，完成文件上传。因为我们会使用文件上传的工具，它们已经封装好的，
+	提供API,只要调用它们的API就可以完成文件上传操作.
+	
+	我们使用的commons-fileupload,它是apache提供的一套开源免费的文件上传工具。
+-------------------------------------------------------------------------------------------------
+	使用commons-fileupload
+	1.导入jar包
+		commons-fileupload-1.2.1.jar  文件上传
+		commons-io-1.4.jar 它是提供的io工具.
+		介绍commons-fileupload
+			它有三个核心
+				1.DiskFileItemFactory类
+				2.ServletFileUpload类
+				3.FileItem
+			
+	2.快速入门:
+			1.创建upload2.jsp页面
+				<form action="${pageContext.request.contextPath}/upload2" method="post" encType="multipart/form-data">
+					<input type="file" name="f"><br>
+					<input type="submit" value="上传">
+				</form>
+			2.创建Upload2Servlet
+				1.创建一个DiskFileItemFactory
+					DiskFileItemFactory factory=new DiskFileItemFactory();
+				2.创建ServletFileUpload类					
+					ServletFileUpload upload=new ServletFileUpload(factory);					
+				3.解析所有上传数据
+					List<FileItem> items = upload.parseRequest(request);
+					
+			3.了遍历items集合，集合中的每一项，就是一个上传数据.
+				1.isFormField();
+					
+				2.getFieldName();
+					返回值String,得到组件名称  <input name="">
+				3.getName();
+					返回值是String,得到的是上传文件的名称.
+					注意:浏览器不同，它们得到的效果不一样。
+						1.包含全路径名称  例如: C:\Users\Administrator\Desktop\a.txt
+						2.只包含上传文件名称 例如:a.txt
+						
+				4.getString();
+					这个方法可以获取非上传组件的内容,相当于  getParameter方法作用。
+					
+					如果是上传组件，上传的文件是文本文件，可以获取到文件文件的内容。
+					但是如果不是文件文件，例如：是一张图片，这样获取合适吗?
+						
+				5.获取上传文件的内容,保存到服务器端.
+					item.getInputStream();它是用于读取上传文件内容的输入流.
+					使用文件复制操作就可以完成文件上传。
+					
+					IOUtils.copy(item.getInputStream(), fos);
+					
+	----------------------------------------------------------------------------------------
+	核心API介绍
+		1.DiskFileItemFactory
+			作用:可以设置缓存大小以及临时文件保存位置.			
+			默认缓存大小是  10240(10k).
+			临时文件默认存储在系统的临时文件目录下.（可以在环境变量中查看）
+			
+			1.new DiskFileItemFactory();
+				缓存大小与临时文件存储位置使用默认的.
+				
+			2.DiskFileItemFactory(int sizeThreshold, File repository) 
+				sizeThreshold :缓存大小
+				repository:临时文件存储位置
+				
+			注意，对于无参数构造，也可以设置缓存大小以及临时文件存储位置.	
+			 setSizeThreshold(int sizeThreshold)
+			 setRepository(File repository)
+			
+		2.ServletFileUpload
+			1.ServletFileUpload upload=new ServletFileUpload(factory);
+			 创建一个上传工具，指定使用缓存区与临时文件存储位置.
+			
+			2.List<FileItem> items=upload.parseRequest(request);
+				它是用于解析request对象，得到所有上传项.每一个FileItem就相当于一个上传项.
+				
+			3.boolean flag=upload.isMultipartContent(request);
+				用于判断是否是上传.
+				可以简单理解，就是判断encType="multipart/form-data";
+				
+			4.设置上传文件大小
+				void setFileSizeMax(long fileSizeMax) 设置单个文件上传大小 
+				void  setSizeMax(long sizeMax) 设置总文件上传大小 
+
+			5.解决上传文件中文名称乱码
+				setHeaderEncoding("utf-8");
+				注意:如果使用reqeust.setCharacterEncoding("utf-8")也可以，但不建议使用。
+				
+			
+		3.FileItem
+			1.isFormField
+				用于判断是否是上传组件.
+				如果是<input type="file">返回的就是false,否则返回true.
+				
+			2.getFieldName();
+					返回值String,得到组件名称  <input name="">
+			3.getName();
+				返回值是String,得到的是上传文件的名称.
+				注意:浏览器不同，它们得到的效果不一样。
+					1.包含全路径名称  例如: C:\Users\Administrator\Desktop\a.txt
+					2.只包含上传文件名称 例如:a.txt
+					
+			4.getString();
+				这个方法可以获取非上传组件的内容,相当于  getParameter方法作用。
+				
+				问题:如果信息是中文，会出现乱码，解决方案  getString("utf-8");
+				
+				如果是上传组件，上传的文件是文本文件，可以获取到文件文件的内容。
+				但是如果不是文件文件，例如：是一张图片，这样获取合适吗?
+					
+			5.获取上传文件的内容,保存到服务器端.
+				item.getInputStream();它是用于读取上传文件内容的输入流.
+				使用文件复制操作就可以完成文件上传。
+				
+			6.删除临时文件
+				item.delete();
+				
+		------------------------------------------------------------
+		总结:关于文件上传时的乱码问题:
+			1.上传文件名称乱码
+				ServletFileUpload.setHeaderEncoding("utf-8");				
+			2.非上传组件内容乱码
+				FileItem.getString("utf-8");
+				
+			3.思考:上传文件信息是否会乱码，需要解决吗?
+				不需要解决，因为我们在上传时，使用的字节流来进行复制。
+=====================================================================================================	
+		多文件上传
+			
+			 <script type="text/javascript">
+    	
+				function addFile(){
+					var div=document.getElementById("content");
+					
+					div.innerHTML+="<div><input type='file' name='f'><input type='button' value='remove file' onclick='removeFile(this)'></div>";
+				}
+				
+				function removeFile(btn){
+					
+					document.getElementById("content").removeChild(btn.parentNode);
+					
+				}
+			</script>
+			
+			服务器端代码不需要改变.
+------------------------------------------------------------------------		
+关于文件上传的注意事项:
+		
+		1.上传文件在服务器端保存位置问题
+			
+			1.保存在可以被浏览器直接访问的位置
+				例如:商城的商品图片
+				
+				保存在工程的WebRoot下的路径(不包含META-INF以及WEB-INF目录及其子目录)
+				
+			2.保存在不能被浏览器直接访问的位置
+				例如:付费的视频。		
+					
+				1.工程中   META-INF  WEB-INF目录及其子目录
+				2.不在工程中的服务器的磁盘目录下.
+				
+		------------------------------------------------
+		2.上传文件在同一个目录重名问题 	
+			在开发中解决这个问题，可以给上传文件起随机名称。
+			
+			1.使用毫秒值
+			2.使用uuid
+		---------------------------------------------------
+		3.同一目录下文件过多	
+		
+			只需要分目录就可以.
+				1) 按照上传时间进行目录分离 （周、月 ）
+				2) 按照上传用户进行目录分离 ----- 为每个用户建立单独目录 
+				3) 按照固定数量进行目录分离 ------ 假设每个目录只能存放3000个文件 ，每当一个目录存满3000个文件后，创建一个新的目录
+				4)按照文件名的hashcode进行目录分离.
+					
+				public static String generateRandomDir(String uuidFileName) {
+					// 获得唯一文件名的hashcode
+					int hashcode = uuidFileName.hashCode();
+					// 获得一级目录
+					int d1 = hashcode & 0xf;       
+					// 获得二级目录
+					int d2 = (hashcode >>> 4) & 0xf;
+
+					return "/" + d2 + "/" + d1;// 共有256目录l
+				}
+========================================================================================
+文件下载
+	文件下载的方式:
+		1.超连接下载
+		2.服务器端通过流下载(服务器端编程)
+		
+	1.超连接下载
+		download1.jsp
+		<a href='${pageContext.request.contextPath}/upload/a.bmp'>a.bmp</a><br>
+		<a href='${pageContext.request.contextPath}/upload/a.doc'>a.doc</a><br>
+		<a href='${pageContext.request.contextPath}/upload/a.txt'>a.txt</a><br>
+		<a href='${pageContext.request.contextPath}/upload/tk.mp3'>tk.mp3</a><br>
+
+		注意:如果文件可以直接被浏览器解析，那么会在浏览器中直接打开，不能被浏览器直接解析，就是下载操作。
+             直接打开的要想下载 ，右键另存为。
+
+		超连接下载，要求下载 的资源，必须是可以直接被浏览器直接访问的。
+			
+		客户端访问服务器静态资源文件时，静态资源文件是通过 缺省Servlet返回的，
+		在tomcat配置文件conf/web.xml 找到 --- org.apache.catalina.servlets.DefaultServlet	
+		
+	2.在服务器端编程完成下载.
+		1.创建download2.jsp
+			<a href='${pageContext.request.contextPath}/download?filename=a.bmp'>a.bmp</a><br>
+			<a href='${pageContext.request.contextPath}/download?filename=a.doc'>a.doc</a><br>
+			<a href='${pageContext.request.contextPath}/download?filename=a.txt'>a.txt</a><br>
+			<a href='${pageContext.request.contextPath}/download?filename=tk.mp3'>tk.mp3</a><br>
+			
+		2.创建DownloadServlet
+			// 1.得到要下载 的文件名称
+			String filename = request.getParameter("filename");
+			
+			//2.判断文件是否存在
+			File file = new File("d:/upload/" + filename);
+			if (file.exists())
+		
+			//3.进行下载 
+				原理:就是通过response获取一个输出流，将要下载的文件内容写回到浏览器端就可以了.
+				
+		注意:要想通过编程的方式，实现文件下载，
+			1.要设置mimetype类型
+				resposne.setContextType(String mimeType);
+				
+				问题:怎样可以得到要下载文件的mimeType类型?
+					ServletContext.getMimeType(String filename);
+					
+				如果设置了mimeType,浏览器能解析的就直接展示了，不能解析的，直接下载.
+				
+			2.设置一个响应头，设置后的效果，就是无论返回的是否可以被浏览器解析，就是下载 。
+				response.setHeader("content-disposition","attachment;filename=下载文件名称");
+				
+		总结:服务器端编程下载:
+			1.将下载的文件通过resposne.getOutputStream()流写回到浏览器端。
+			2.设置mimeType  response.setContentType(getServletContext.getMimeType(String filename));
+			3.设置响应头，目的是永远是下载操作
+				response.setHeader("content-disposition","attachment;filename=下载文件名称");
+				
+		--------------------------------------
+		文件下载时的乱码问题:
+			
+			1.关于下载时中文名称资源查找不到
+				原因:<a href='${pageContext.request.contextPath}/download?filename=天空.mp3'>天空.mp3</a>
+				  这是get请求。
+				  
+				  在服务器端:
+				  String filename = request.getParameter("filename");
+				  
+				 解决: new String(filename.getBytes("iso8859-1"),"utf-8"); 
+				 
+			2.下载文件显示时的中文乱码问题
+					response.setHeader("content-disposition", "attachment;filename="+filename);
+					
+					IE:要求filename必须是utf-8码
+					firefox:要求filename必须是base64编码.
+					
+					问题:怎样判断浏览器?
+						String agent=request.getHeader("user-agent");
+					
+						if (agent.contains("MSIE")) {
+							// IE浏览器
+							filename = URLEncoder.encode(filename, "utf-8");
+							
+						} else if (agent.contains("Firefox")) {
+							// 火狐浏览器
+							BASE64Encoder base64Encoder = new BASE64Encoder();
+							filename = "=?utf-8?B?"
+									+ base64Encoder.encode(filename.getBytes("utf-8"))
+									+ "?=";
+						}else {
+							// 其它浏览器
+							filename = URLEncoder.encode(filename, "utf-8");
+						}
+============================================================================================================
+作业:
+	网盘系统
+		create database day22
+
+		create table resources(
+		  id int primary key auto_increment,
+		  uuidname varchar(100) unique not null,
+		  realname varchar(40) not null,
+		  savepath varchar(100) not null,
+		  uploadtime timestamp ,
+		  description varchar(255)
+		);
+		
+		看图
+		
+------------------------------------------------------------------------------------------
+扩展:使用队列来优化递归操作.
+	
+	队列特点:先进先出.
+	
+	在jdk中有一个接口Queue 它有一个实现类叫LinkedList它其时就是一个队列。
+	
+	如果要使用队列，插入 offer  获取使用 poll
+	
+	
+	使用队列来优化递归操作:是可以解决目录层次过多问题。
+		因为:递归操作可以理解成是纵向的遍历，如果目录层次比较多，在内存中存储的数据也多，会引起溢出。
+		使用队列，它是横向遍历，一层一层遍历，可以解决目录层次比较多问题。
+		因为使用队列，最多时候在内存中只存储了一层的信息。
+		
+	最常用的就是树型结构。
+		
+
+
+				
+				
+		
+			
+			
+			

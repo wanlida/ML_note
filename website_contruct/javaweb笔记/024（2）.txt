@@ -1,0 +1,90 @@
+今天内容:
+	1.类加载器
+	2.泛型反射
+	3.关于web阶段项目。
+		1.项目分析
+		2.关于注册功能
+-----------------------------------------------------------------
+复习:
+	1.注解
+	2.servlet3.0特性
+	3.动态代理
+	
+========================================================================
+1.类加载器
+	问题:什么是类加载器，有什么作用?
+		类加载器的作用就是将java中的字节码文件(.class文件)转换成Class对象。
+		
+	当 JVM 启动时，会形成由三个类加载器组成的初始类加载器层次结构：
+		1.引导类加载器 BootStrap    jre/lib/rt.jar
+		2.扩展类加载器  ExtClassLoader   JRE/lib/ext/*.jar
+		3.应用类加载器(系统类加载器) AppClassLoader SystemClassLoader   CLASSPATH指定的所有jar或目录
+		
+		在java中ClassLoader代表类加载器，所有的类加载器都是ClassLoader的子.
+	
+	演示类加载器：
+		问题:类加载器如果获取?
+			在Class类中有一个方法 getClassLoader()它返回的就是一个类加载器.
+			
+		1.获取引导类加载器
+			ClassLoader cl = String.class.getClassLoader();		
+			System.out.println(cl);
+			结果是null.
+			原因:引导类加载器特殊，它根本就不是java实现。所有在得到引导类回载器是结果就是null.
+				
+		2.扩展类加载器
+			ClassLoader cl = AccessBridge.class.getClassLoader();		
+			System.out.println(cl); //sun.misc.Launcher$ExtClassLoader@9cb0f4
+			
+		3.应用类加载器
+			ClassLoader cl = this.getClass().getClassLoader();		
+			System.out.println(cl); //sun.misc.Launcher$AppClassLoader@164dbd5
+			
+	----------------------------------------
+	全盘负责委托机制 
+		全盘负责：即是当一个classloader加载一个Class的时候，这个Class所依赖的和引用的其它Class通常也由这个classloader负责载入。
+		委托机制：先让parent（父）类加载器 寻找，只有在parent找不到的时候才从自己的类路径中去寻找。
+		类加载还采用了cache机制：如果 cache中保存了这个Class就直接返回它，如果没有才从文件中读取和转换成Class，并存入cache，这就是为什么修改了Class但是必须重新启动JVM才能生效,并且类只加载一次的原因。 
+
+	-------------------------------------------
+	自定义类加载器
+	
+		创建了一个类  javax.activation.MimeType，在这个类中有一个方法show();
+		当jvm加载这个类时，因为在rt.jar包下也存在一个MimeType类，并且包名都一样，
+		这时jvm就会使用引导类加载器加载这个类，而我们想得到的其实是应该由应用类加载
+		器加载的Class.
+		
+		解决方案:
+			自定义类加载器.
+			1.创建一个类，去继承自ClassLoader
+			2.重写findClass方法，在这个方法中通过
+				defineClass将一个.class文件转换成Class对象.
+====================================================================================================
+泛型反射
+
+	问题:在BaseDaoImpl类中需要得到当前这个类上的泛型的Class对象，而直接通过T.class这是不对的.
+		public class BaseDaoImpl<T> implements BaseDao<T> {
+
+		public T findById(int id) {
+			// Session session=HibernateUtils.getSession();
+
+			// session.get(T.class,id);
+			
+
+			return null;
+		}
+		怎样得到当前这个类上的泛型的Class?
+		
+		Type type = this.getClass().getGenericSuperclass(); // 得到当前类上的泛型--父类型
+
+		Type[] params = ((ParameterizedType) type).getActualTypeArguments(); // 得到当前类上所有的泛型类型Class
+
+		clazz = (Class) params[0];	
+		
+		
+
+	
+				
+				
+				
+		

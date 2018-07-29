@@ -1,0 +1,281 @@
+* 课程回顾：
+	* schema约束
+		* schema和DTD的对比
+			* schema符合XML的语法结构。
+			* DOM或者SAX解析技术可以解析schema的文档。
+			* schema对名称空间支持好。
+			* schema支持更多的数据类型，自定义数据类型。
+			
+		* 约束文档，在XML变成实例文档。	
+		* schema后缀名.xsd
+		* schema只有一个根节点，名称schema，不许改变。
+		
+		* 开发步骤：
+			* 编写schema的约束文档。
+				* 引入W3C名称空间	xmlns=""
+				* 定义元素	<element name="元素名称">
+				* 判断是否是复杂还是简单
+					* 简单	<element name="元素名称" type="元素类型">
+					* 复杂
+						* 声明我是复杂元素	<complexType>
+						* 子元素之间的关系	<all>
+						
+				* 起名，在根节点属性	targetNamespace
+					* 值是任意的。
+					
+				* 设置质量好的	
+					
+			* 在XML文档中引入
+				* 引入W3C的名称空间
+				* 引入schema的名称空间（起别名）
+				* 引入schema的名称空间地址
+				
+		
+	* JAXP的SAX解析XML
+		* 解析器
+			* 通过解析器的工厂类创建解析对象
+			* 解析XML，参数传事件处理器。
+			* 事件处理器由咱们编写。
+			
+		* 事件处理器
+			* 编写一个类继承DefaultHandler，重写三个方法。
+				* startElement();
+				* chacarters();
+				* endElement();
+			* 操作参数，拿到解析的内容。
+			
+			
+	* DOM4J解析XML（*****）
+		* 导入jar包。
+		* 开发DOM4J的步骤：
+			* 获取解析器	new SAXReader()
+			* 解析XML		read()	返回Document对象。
+			* 获取根节点	getRootElement()	Element对象
+			
+				
+			* addElement()	直接添加子节点
+			* 创建子节点	DocumentHelper.createElement("元素名称");	返回Element对象。
+			* List.add(idx,E);
+			
+			* 回写
+				* new XMLWriter(new FileoutputStream(path));
+				* write(document);
+				* close();
+				
+			* OutputFormat			
+			* setEncoding();	设置编码
+			
+		* XPATH	支持
+			* 导入包。
+			* selectNodes("XPATH的语法");		返回List
+			* selectSigleNode("XPATH的语法");	返回Node对象
+	
+==================================================================================================================
+	* JAVA的基础加强
+		* MyEclipse的介绍
+			* MyEclipse的eclipse的插件。收费的。
+			* 安装，破解。
+			* 选择工作空间：不能中文和空格。	D:\itcast\1110
+			* 默认是GBK的编码，设置成UTF-8的编码。
+			
+			* 创建web的项目：项目的名称：不要使用中文。
+			* 命名规范：
+				* 创建包结构，小写。	cn.itcast.test
+				* 编写类。首字母大写
+				* 编写方法，首字母小写，第二个单词的首字母大写。驼峰命名。
+				
+				
+		* DeBug调试模式（断点模式）（必须会）
+			* 跟踪程序的运行状态。
+			* 方便查询程序源代码。
+			
+			* 打断点。
+			* 右键 -- DeBug As	
+				* 断点这行没执行。
+				
+			* 快捷键	
+				* Step Over	跳过	F6
+				* Resume	跳入到下一个断点，如果没有，执行完成。	F8
+				* Step Into	跳入	F5
+				* Drop To Frame	返回到开始位置
+				* Step Return 跳出	F7
+				
+				
+		* JUnit 单元测试
+			* 单元的最小单位，就是方法。
+			* JUnit版本：推荐使用JUnit4.X版本。
+			* 下载JUnit包，导入包。但是使用MyEclipse开发，引入jar包。
+			
+			* 使用JUnit测试
+				public void 方法名任意(没有参数列表){
+					
+				}
+				
+			* 注解：
+				* @Test		测试
+				* @Ignore	忽略
+				* @Before	在方法之前执行
+				* @After	方法之后执行
+			
+		
+		* MyEclipse的快捷键
+			// alt + / 内容补全
+			// ctrl + 1 错误处理
+			FileOutputStream fos = new FileOutputStream("");
+			// ctrl + shift + o
+			
+			List list = new ArrayList();
+			// ctrl + shift + f 格式化
+			
+			// 单行注释（添加和取消）	ctrl + /
+			
+			// 多行注释	ctrl + shift + /
+			// 取消多行注释	ctrl + shift + \
+			
+			
+		* JDK5.0新的特性	
+			* 泛型
+				* 用到集合中
+					* 泛型擦除：泛型存在源代码的阶段，编译成class文件后，泛型信息被擦除。
+					* 用到哪些集合？	List	Set		Map
+					* 集合的遍历必须会。
+					
+					List list1 = new ArrayList();
+					List<String> list2 = new ArrayList();
+					List list3 = new ArrayList<String>();
+					List<String> list4 = new ArrayList<String>();
+					List<Object> list5 = new ArrayList<String>();
+					List<String> list6 = new ArrayList<Object>();
+					
+						
+				* 应用通用性较高的代码。
+					* 定义泛型方法	
+						* 自定义泛型方法
+						* 声明泛型	<T>	放在返回值之前
+						* 方法的逻辑只与类型有关，这类方法可以定义成泛型方法
+						* 只有对象类型才能作为泛型方法的实际参数
+						
+					* 类
+					* 思考题：有数组，有方法，把位置换一下。
+										
+			枚举
+				* BOSS	HR WORKER	
+				
+				创建枚举格式：
+					enum 枚举类型名称 {
+					枚举对象1名称,
+					枚举对象2名称,
+					 … , 
+					枚举对象n名称;
+				}
+			
+				* 枚举的特性：
+					枚举类也是一种特殊形式的Java类。
+					枚举类中声明的每一个枚举值代表枚举类的一个实例对象。
+					与java中的普通类一样，在声明枚举类时，也可以声明属性、方法和构造函数，但枚举类的构造函数必须为私有的（这点不难理解）。
+					枚举类也可以实现接口、或继承抽象类。
+					JDK5中扩展了swith语句，它除了可以接收int, byte, char, short外，还可以接收一个枚举类型。
+					若枚举类只有一个枚举值，则可以当作单态设计模式使用。
+					
+					
+				* 把构造方法放在枚举值的下面。
+				* 如果枚举的构造方法有参数，那么实例中必须有传入参数。
+				
+				* 枚举的API
+					* String name() 	返回枚举的名称 
+					* int ordinal()  	返回枚举的下标值
+					* static <T extends Enum<T>> T  valueOf(Class<T> enumType, String name) 	通过枚举名称获取枚举的对象
+					
+					* valueof(String name)  通过名称获取枚举对象（枚举对象调用）
+					* values()  获得所有枚举对象数组（枚举对象调用）
+					
+					
+					1.已知枚举对象，获取枚举的名称和下标。
+					2.已知枚举名称，获取枚举对象和下标。
+					3.已知枚举下标，获取枚举对象和名称。
+					
+			
+			静态导入（鸡肋）
+				* import static xxx.xxx.xxx;
+				System.out.println();
+				
+			自动装箱/拆箱
+				* 自动装箱：把基本类型转换成包装类。
+				* 自动拆箱：把包装类转换成基本类型。
+			
+			for/in语句
+				* 抛弃迭代器。
+				* 可以使用增强for循环的集合。
+					* 数组
+					* 实现Iterable接口的集合。	List  Set	
+				* 语法：
+					for(数据类型 变量 : 循环的类型){
+						
+					}
+					
+			可变参数
+				* 只能有一个可变参数。
+				* 但是可变参数需要放在末尾。
+				* 定义方法，不能定义变量。
+				
+				
+		* 反射	Class类
+			* 可以获取类中的所有的内容。
+			* 已知类和对象的情况下
+				类名.class
+				对象.getClass() ---- Object类提供
+				未知类和对象的情况下
+				Class.forName(“包名.类名”) 
+				
+				
+		* 作业：
+			web.xml配置文件	
+				* DOM4J解析XML
+				* 拿到cn.itcast.servlet.HelloServlet
+				* 就可以通过反射Class对象。
+				
+				<web-app>
+					<servlet>
+						<servlet-name>HelloServlet</servlet-name>
+						<servlet-class>cn.itcast.servlet.HelloServlet</servlet-class>
+					</servlet>
+				</web-app>
+				
+				
+				* 容器（服务器），启动。加载配置，读取配置文件，解析。拿到配置文件内容。通过反射
+					创建实例，拿到方法。
+					* 加载.class文件。不能使用xxx.java文件。
+					
+			
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

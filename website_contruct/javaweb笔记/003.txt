@@ -1,0 +1,373 @@
+* 课程回顾：
+	* CSS
+		* CSS的简介
+			* 层叠样式表。
+			
+		* CSS与HTML的结合（4种）
+			* HTML的标签提供了属性	style="CSS的代码"
+			* HTML提供了标签	<style type="text/css">CSS的代码</style>	放在<head>中间
+			* 引入外部的文件
+				@import url("CSS文件的地址");	写在<style>标签中间
+			* 通过html的标签	<link rel="stylesheet" type="text/css" href="CSS的地址" >	
+			
+		* 优先级：	一般情况下	从上到下，由外到内，优先级从低到高的。
+					特殊情况下	标签选择器 < 类选择器 < ID选择器 < style属性
+			
+		* CSS的选择器
+			* 基本选择器
+				* 标签名选择器
+					* div{CSS}
+				* 类选择器
+					* 有一个标签，提供了class属性	<div class="值"></div>
+					* .值{CSS}
+				* ID选择器
+					* 有一个标签，提供了class属性	<div id="值"></div>
+					* #值{CSS}
+					
+			* 扩展选择器
+				* 关联选择器
+					* 中间使用空格	例子：	div font{CSS}
+				* 组合选择器
+					* 不同的选择器有相同的样式	例子：	.haha,#hehe{CSS}
+				* 伪元素选择器
+					* CSS提供了一些选择器。
+					
+		* CSS的布局			
+	
+	
+	* JS
+		* js的简介
+			* js基于对象和事件驱动的脚本语言，作用客户端上。
+			* 特点：
+				* 交互性
+				* 安全性
+				* 扩平台性
+		
+		* js与java不同
+			* js基于对象，java面向对象
+			* js解析就可以执行，java先编译再执行
+			* js是弱类型的语言，java是强类型的语言。
+		
+		* js的组成
+			* ECMAScript	
+			* BOM
+			* DOM
+			
+		* js的语法
+			* 关键字	var 	function	
+			* 标示符
+			* 注释		// /**/
+			* 变量
+				* var 声明变量
+				* js的基本数据
+					String 		字符串类型
+						* var str = "abc"; 	var str = 'abc';
+					Number		数字类型
+						* 不区分整数和小数
+					Boolean		布尔类型
+					Null		空
+					Undefined	未定义（声明没有赋值）
+					
+				* typeof()	判断变量的类型	
+				
+			* js的运算符
+				alert(true + 1);	//	2
+				
+				==		比较值
+				===		比较值和类型
+				
+			* js的语句
+				if(num == 4){
+					alert("ss");
+				}
+				
+				for(var i=0;i<4;i++){
+					document.write("str"+"<br/>");
+				}
+				
+			* js的数组
+				* 声明数组两种方式
+					var arr = [22,33];
+					var arr = new Array(4);	长度
+					var arr = new Array(4,5);	元素
+					
+					* length	数组的长度
+					
+			* js的函数
+				* 声明函数	function
+					function 函数名称(参数列表不能使用var关键字){
+						函数体;
+						return;	返回值没有可以不写
+					}
+					
+					function getSum(){
+						return 100;
+					}
+					
+					var sum = getSum;
+					sum();
+					
+=======================================================================================================================
+									
+		* js的动态函数和匿名函数
+			* js的动态函数和匿名函数
+				* 动态函数
+					function getSum(){
+						return 50;
+					}
+					js提供了内置对象	Function
+					
+				* 匿名函数
+					* 没有名称的函数
+					
+		
+		* js的全局变量和局部变量
+			* 全局变量：在<script>标签内部定义的变量，全局变量。
+			* 局部变量：在函数的内部定义的变量，局部变量。
+								
+								
+		* javascript的对象和API
+			* String 对象
+				* 声明
+					var str = "abc";
+					var str = new String("abc");
+					
+				* 属性：length：字符串的长度	
+				* 方法：
+					* 和HTML相关的方法（书写没有提示的）
+						* bold()			使用粗体显示显示字符串
+						* fontcolor(color)		参数是必须的，设置字体的颜色
+						* fontsize(size)		设置字体的大小（1-7）
+						* italics()				斜体
+						* link(url)				设置链接
+						* sub()					下标
+						* sup()					上标
+						
+					* 和java中String对象类似的（*****）
+						* charAt(index)				返回指定位置的字符
+						* indexOf(str,fromIndex)	检索字符串，没有返回-1
+						* lastIndexOf(str,fromIndex)	从后向前检索字符串
+						* replace(要替换的字符串,替换成啥)		
+						
+						* substring(start,stop)				截取字符串
+						* substr(start,length)				截取字符串，从哪开始，截取多长
+				
+				
+			* 定义一个方法：可以去掉字符串两边的空格。	
+				var str = "  ab c     ";
+				var newStr = mytrim(str);
+				newStr = "ab c";
+				
+				
+				* String 对象
+				* 声明
+					var str = "abc";
+					var str = new String("abc");
+					
+				* 属性：length：字符串的长度	
+				* 方法：
+					* 和HTML相关的方法（书写没有提示的）
+						* bold()			使用粗体显示显示字符串
+						* fontcolor(color)		参数是必须的，设置字体的颜色
+						* fontsize(size)		设置字体的大小（1-7）
+						* italics()				斜体
+						* link(url)				设置链接
+						* sub()					下标
+						* sup()					上标
+						
+					* 和java中String对象类似的
+						* charAt(index)				返回指定位置的字符
+						* indexOf(str,fromIndex)	检索字符串，没有返回-1
+						* lastIndexOf(str,fromIndex)	从后向前检索字符串
+						* replace(要替换的字符串,替换成啥)		
+						
+						* substring(start,stop)				截取字符串
+						* substr(start,length)				截取字符串，从哪开始，截取多长
+						
+						
+			* Array对象
+				* 声明数组
+					var arr = [12,33];
+					var arr = new Array(4,4);
+				
+				* Array对象
+				* 声明数组
+					var arr = [12,33];
+					var arr = new Array(4,4);
+					
+				* 属性：length：长度
+				* 方法：
+					* concat(元素，数组);	返回新的数组
+					* join(s)			通过s标识（-），进行分隔，返回字符串
+					* pop()				删除末尾的元素，返回最后一个元素
+					* push()			向末尾添加元素，返回新数组的长度
+					* sort()			排序的方法	
+					
+					
+			* Date日期对象
+				var date = new Date();	当前的日期
+					* Date日期对象
+				var date = new Date();	当前的日期
+				
+				* toLocaleString()	转换本地的日期格式
+				* toLocaleDateString()	只包含日期
+				* toLocaleTimeString()	只包含时间
+				
+				* getDate()			返回一个月中的某一天（1-31）
+				* getDay()			返回一周中的某一天(0-6)
+				* getMonth()		返回月份（0-11）	+1
+				* getFullYear()		返回年份
+				
+				* getTime()			返回毫秒数
+				* setTime()			通过毫秒数获取日期
+					* var date3 = new Date(1415937050973);
+				
+				* parse(str)		解析字符串，返回毫秒数
+					Date.parse(str);
+					
+					str：	
+						2014-11-14	解析不了
+						
+						11/14/2014	可以解析
+						2014,11,14	可以解析
+					
+					
+			* Math 和数学相关的对象
+				* math对象（静态的方法）
+				* ceil(x)		上舍入
+				* floor(x)		下舍入
+				* round(x)		四舍五入
+				* random()		0-1的随机数
+				
+				
+			* RegExp对象
+				* 正则表达式对象
+				* 应用：编写注册的表单，对表单输入的内容进行校验。
+					
+					* var reg = new RegExp("表达式");（开发中不经常使用）
+					* var reg = /表达式/			开发中经常使用
+						* var reg = /^表达式$/		开发中经常使用
+						
+						* exec(string)		不经常使用
+							* 如果匹配，返回匹配的结果
+						
+						* test(string)		经常使用
+							* 如果匹配，返回是true，如果不匹配，返回是false
+							
+						if(reg.test("abc")){
+							// 匹配上了
+							
+						}else{
+							
+						}
+						
+						
+			* 全局函数
+				* 使用全局函数，不需要任何的对象。
+				* 全局函数可以拿过来使用。
+				* global帮着管理全局函数。
+				
+				* 全局函数
+				* eval()		可以解析字符串，执行字符串中间的js代码
+				* isNaN()		判断是否是非数字值
+				* parseInt()	解析字符串，返回整数
+				
+				* encodeURI()	进行编码
+				* decodeURI()	解析解码
+				
+				* encodeURIComponent()
+				* decodeURIComponent()
+				
+				* escape()
+				* unescape()
+				
+		
+		* BOM	浏览器对象模型
+			* (Brower Object Model)
+				
+				Window  		窗口对象（*****）
+				Navigator 		和浏览器版本相关的对象（**）
+				Screen 			和屏幕相关的对象（-*）
+				History 		和浏览器历史相关（**）
+				Location 		和浏览器地址相关的对象（***）
+				
+				
+				
+				Document		文档对象
+
+				
+				
+			Window  		窗口对象（*****）
+
+			Navigator 		和浏览器版本相关的对象（**）
+				* userAgent	获取浏览器的相关的信息
+				* window.navigator.userAgent	window可以省略不写
+			
+			Screen 			和屏幕相关的对象（-*）
+			
+			History 		和浏览器历史相关（**）
+				* back()		返回上一个页面
+				* forward()		去下一个页面
+				
+				* go()
+					* 传参数	go(1)	等于forward()	
+							go(-1)	等于back()
+					
+			Location 		和浏览器地址相关的对象（***）
+				* href	获取和设置浏览器的路径（***）
+				
+			* 事件
+				* onclick	点击事件
+				* 值的写法：	
+				
+			* document对象	
+				* alert()		弹出提示框
+				* confirm("参数")		询问框
+					* 提供俩按钮，确定和取消
+					* 如果点击是确定，返回true，如果点击取消，返回false
+					
+				* moveBy()			移动浏览器
+					
+				* setInterval("函数",毫秒值)		定时相关的
+					* 每隔毫秒值执行一次函数
+					* 返回唯一的id值
+					
+				* setTimeout("函数",毫秒值)		
+					* 到了毫秒值后执行一次函数
+					* 返回唯一的id值
+					
+				* 清除定时
+					clearInterval(id的值)		
+					clearTimeout()
+					
+				* close()	关闭浏览器的窗口
+				* open()	打开浏览器窗口
+				
+				* 属性：
+					* opener 返回对创建此窗口的窗口的引用。 
+					* win  open()	弹出baidu的窗口
+						
+						在baidu窗口中  baidu.opener	得到了win的引用。
+						
+				* document对象方法
+					* document.getElementById("nameId"); 获取到是input标签的对象	
+		
+		* DOM	文档对象模型
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		

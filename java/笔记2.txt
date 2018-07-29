@@ -1,0 +1,49 @@
+http://www.zhihu.com/question/41275793/answer/90346865
+
+java web 常用的框架是
+
+作者：javaniu
+链接：http://www.zhihu.com/question/41275793/answer/90346865
+来源：知乎
+著作权归作者所有，转载请联系作者获得授权。
+
+市场上讲：php做中小型企业网站比较合适，性价比高，java偏大型。
+性价比：很简单的php空间一年才几百块钱，而java空间一个月就得几百。
+语言方面：当然php和java都各领风骚，最主要看自己最擅长哪一种语言了，
+我也用过php一段时间，发现确实很难习惯其语法，所以最代码也是用java开发的。
+开发周期：java和php我觉得效率上php会好，但性能上java会比php会更占优势，当然这不是绝对的，只能说玩的好的语言不是问题。
+其他方面：如果客户坚持让你用php或java，那你还有的挑么？
+对于java web开发框架，主要有：
+
+1.S2SH(struts2+spring+hibernate)
+
+基于Struts2+Spring3+Hibernate4开发java Web企业应用开源框架s2jh源码分享
+spring+hibernate+struts2开发OA企业办公管理系统源码分享
+Struts2+Hibernate3+Spring三大框架技术实现MySQL数据分页
+Spring+struts2+hibernate+easyui基础权限管理框架
+Spring+Struts2+Hibernate三大框架开发企业人力资源管理系统源代码下载
+Spring mvc+struts2+Hibernate整合实例代码(注解详解)
+
+2.S2SM(struts2+spring+mybatis)
+
+Spring+Struts2+mybatis手动配置三大框架整合源代码下载
+Struts2+mybatis开发音乐分享系统
+
+3.SSH(spring mvc+spring+hibernate或struts+spring+hibernate)
+
+Spring MVC+Spring+Hibrenarte实现的简单的CRUD项目实例
+springMVC注解与hibernate完美结合完成基本的增删改查demo源码下载
+springmvc+hibernate+spring+easyui开发bsalse进销存后台管理系统源代码下载
+spring 3.0+spring MVC+Hibernate框架搭建教程(附：springMVC文件上传功能)
+spring+struts2+Hibernate三大框架开发某制药厂管理系统源代码下载
+Spring mvc+struts2+Hibernate整合实例代码(注解详解)
+
+4.SSM(spring mvc+spring+mybatis)
+
+SpringMVC+Mybatis整合实现简单权限控制系统代码
+
+5.JSJ(javabean+servlet+jsp)
+
+jsp+servlet+javabean编写的一个java开源免费简易电子商城系统源码，适合初学者
+JSP Servlet开发博客天空源代码下载
+JSP+servlet开发在线投票统计管理系统源代码下载

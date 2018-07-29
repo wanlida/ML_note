@@ -1,0 +1,1120 @@
+web项目
+
+1.关于web项目目的:
+	将web阶段所有学过的知识点复习总结.
+	
+2.关于web项目功能:
+		功能： 
+		1、用户注册
+		2、用户登录
+		3、添加商品（上传）
+		4、商品查看-- 列表查询
+		5、商品详情页面
+		6、将商品添加购物车
+		7、查看购物车
+		8、修改购物车
+		9、生成订单
+		10、订单查看（取消）
+		11、在线支付
+		12、销售榜单查看
+		
+		会对项目进行重构.
+		会使用注解+动态代理实现细粒度权限控制.
+		添加关于ajax操作
+			对于订单操作时，使用ajax
+		在线支付功能	
+
+3.系统分析
+	1.通过UML用例图来确定当前用户以及所具有的功能
+		游客（未登录）： 注册、登陆、商品查看 
+		商城注册用户 ： 商品查看、添加商品到购物车、购物车管理、生成订单、订单管理、在线支付 
+		管理员 ： 添加商品、商品管理、查看订单 、榜单查看（导出）
+
+	2.系统设计
+		1.技术选型
+			JSTL + JSP + Servlet + JavaBean + BeanUtils + FileUpload + JavaMail + DBUtils(JDBC) + C3P0 +  MySQL + MyEclipse10+ Tomcat7.0 + JDK6  + Windows 
+			MVC 模式
+			JavaEE 三层结构
+			DAO 模式 
+			
+		2.数据库设计
+			E-R图  实体关系图.			
+			对于我们当前项目有这些实体  用户  商品  购物车  订单 
+			
+			通过E-R图可以分析出我们数据库中表与表之间的关系，以及每一个表中的属性。
+			
+			create table users (
+			   id int primary key auto_increment,
+			   username varchar(40),
+			   password varchar(100),
+			   nickname varchar(40),
+			   email varchar(100),
+			   role varchar(100) ,
+			   state int , 
+			   activecode varchar(100),
+			   updatetime timestamp  );
+			商品表
+			create table products(
+			   id varchar(100) primary key , 
+			   name varchar(40), 
+			   price double,
+			   category varchar(40),
+			   pnum int ,
+			   imgurl varchar(100),
+			   description varchar(255));
+			订单表
+			create table orders(
+			   id varchar(100) primary key,
+			   money double,
+			   receiverinfo varchar(255),
+			   paystate int, 
+			   ordertime timestamp,
+			   user_id int , 
+			   foreign key(user_id) references users(id)
+			);
+
+			用户与订单之间存在 一对多关系 ： 在多方添加一方主键作为外键 
+			订单和商品之间存在 多对多关系 ： 创建第三张关系表，引入两张表主键作为外键 （联合主键）
+			订单项
+			create table orderitem(
+			   order_id varchar(100),  
+			   product_id varchar(100),
+			   buynum int , 
+			   primary key(order_id,product_id), 
+			   foreign key(order_id) references orders(id), 
+			   foreign key(product_id) references products(id)
+			);
+
+			设置数据库环境
+			数据库 ：create database estoresystem;
+			
+--------------------------------------------------------------------		
+4.环境搭建	
+	1.导入jar包
+		导入mysql驱动  mysql driver / mysql-connector-java-5.0.8-bin.jar 
+		导入c3p0  c3p0/c3p0-0.9.1.2.jar  将c3p0-config.xml 复制src下  将DataSourceUtils复制 cn.itcast.estore.utils  ----- 配置c3p0-config.xml数据库连接参数
+		导入dbutils apache commons\dbutils\commons-dbutils-1.4.jar
+		导入beanutils commons-beanutils-1.8.3.jar commons-logging-1.1.1.jar 
+		导入fileupload commons-fileupload-1.2.1.jar commons-io-1.4.jar
+		导入javamail mail.jar
+		导入jstl jstl.jar standard.jar
+	2.创建包结构
+		cn.itcast.estore.web.servlet
+		cn.itcast.estore.web.filter
+		cn.itcast.estore.web.listener
+		cn.itcast.estore.service
+		cn.itcast.estore.dao
+		cn.itcast.estore.domain
+		cn.itcast.estore.utils
+
+	3.创建domain
+		UML中类图画法 
+		
+	4.工程发布
+		将estore项目配置虚拟主机，以顶级域名方式进行发布 
+		在浏览器上直接输入www.estore.com就可以访问到我们的工程.
+		
+		1.在tomcat的conf目录下的server.xml文件中配置
+			1.修改tomcat的端口 80.
+			2.配置虚拟主机
+				<Engine name="Catalina" defaultHost="www.estore.com">
+				<Host name="www.estore.com"  appBase="D:\java1110\workspace\estore" unpackWARs="true" autoDeploy="true">
+					<Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs"
+						   prefix="localhost_access_log." suffix=".txt"
+						   pattern="%h %l %u %t &quot;%r&quot; %s %b" />
+						   
+					<Context path="" docBase="D:\java1110\workspace\estore\WebRoot"/>
+
+				  </Host>
+				  
+			3.在C:\Windows\System32\drivers\etc\hosts文件中配置
+				127.0.0.1  www.estore.com
+			
+			注意:在启动tomcat时，不需要将工程estore工程部署到tomcat.
+			
+=========================================================================================
+功能实现:
+	1.注册操作
+		1.一次性验证码
+		2.表单的js校验（非空校验）
+		  服务器端的校验	
+		3.全局编码过滤器
+		4.密码md5加密
+		5.发送激活邮件
+		6.通用错误页面配置
+		
+	2.实现注册功能
+		1.修改静态页面
+			直接创建一个jsp,将page.html页面内容复制到home.jsp页面.
+			在index.jsp中添加一个请求转发操作
+			<jsp:forward page="/home.jsp"/>
+			
+		2.在home.jsp页面上添加一个注册的连接。
+			<a href="${pageContext.request.contextPath}/regist.jsp">注册</a>	
+			
+		3.创建一个regist.jsp页面
+			页面上有
+				1.username
+				2.password
+				3.email
+				4.nickname
+				
+				还需要一个repassword 确认密码
+				还需要一个验证码
+				
+		4.在页面上产生验证码
+			1.将new_words.txt复制到WEB-INF目录下.
+			2.在regist.jsp页面上
+				<img src="${pageContext.request.contextPath}/checkImg" onclick="change();" id="cimg">
+			注意编码问题.
+				
+		5.完成注册的流程
+			regist.jsp---->RegistServlet-----UserService   UserDao
+			
+			关于用户的role与state
+				对于注册的用户它的role我们默认设置为"user",state默认设置为0 代表没有激活,
+				对于激活码，我们在注册时，要生成。通过uuid生成.
+				
+			注册成功后跳转到 regist_success.jsp页面，在页面上显示3秒后跳转到首页.
+				
+			问题:
+				1.怎样让3秒数字变化.
+					通过js代码来完成
+					var interval;
+					window.onload = function() {
+						interval = window.setInterval("fun()", 1000); //设置1秒调用一次fun函数
+					};
+
+					function fun() {
+						var time = document.getElementById("s").innerHTML;
+
+						//判断如果等于0了，不在进行调用fun函数，
+						if (time == 0) {
+							window.clearInterval(interval);
+							return;
+						}
+
+						document.getElementById("s").innerHTML = (time - 1);
+					}
+				2.关于乱码处理
+					使用全局的编码过滤器
+					EncodingFilter完成post与get请求的编码处理.
+					
+		6.关于注册操作的校验问题
+			1.表单校验
+				就是通过js代码完成.
+				1.在<form onsubmit="return checkForm();">
+				2.校验，只校验非空.
+					function checkNull(fieldName){
+						var value = document.getElementById(fieldName).value;
+
+						var reg = /^\s*$/; //代表0个或多个空字符。		
+
+						if(reg.test(value)){
+							document.getElementById(fieldName+"_message").innerHTML="<font color='red'>"+fieldName+"不能为空</font>";
+							return false;
+						}else{
+							return true;
+						}
+					}
+			2.服务器端校验
+				在javaBean中做一个校验方法
+					public Map<String, String> validation() {
+						Map<String, String> map = new HashMap<String, String>();
+						if (username == null || username.trim().length() == 0) {
+							map.put("regist.username.error", "用户名不能为空");
+						}
+						if (password == null || password.trim().length() == 0) {
+							map.put("regist.password.error", "密码不能为空");
+						}
+						return map;
+					}
+					
+				在通过BeanUtils将请求参数封装到javaBean后，调用校验方法.
+				如果判断Map集合中有数据，说明存储了错误信息，就跳转到regist.jsp页面。
+				在页面上展示错误信息，使用jstl标签。
+				
+				
+				
+		7.关于发送激活邮件
+			邮箱 duhongabcdef@163.com
+			密码  abc123
+			
+			关于激活邮件发送我们在UserService中的regist方法中完成。
+			
+			关于MailUtils工具使用:
+					1.props.setProperty("mail.host", "自己邮箱的smtp");
+					2.return new PasswordAuthentication("邮箱帐户", "密码");
+					3.message.setFrom(new InternetAddress("发送者邮箱"));
+			
+				注意:关于发送的信息问题:
+				String emailMsg="注册成功，
+					请<a href='http://www.estore.com/activeUser?activeCode="+user.getActivecode()+"'>激活</a>,
+				激活码为:"+user.getActivecode();
+		
+			
+		8.关于激活用户操作					
+			http://www.estore.com/activeUser?activeCode=d104ed31-0a5f-4eb4-8377-085c9be5f6e4	
+
+			1.创建一个ActiveUserServlet	
+				1.得到激活码，
+				2.调用service中激活操作
+					注意:激活是有时间限制的。
+				3.在service中完成操作时有两件事要做:
+					1.根据激活码查找用户
+					2.判断用户激活码没有过期，进行激活操作.
+					
+		9.md5加密
+			
+			mysql中:UPDATE users SET PASSWORD=MD5(PASSWORD);
+			
+			在UserDao的addUser方法中，对user.getPassword()使用Md5Utils工具进行加密。
+			
+		10.验证码
+			
+			在所有操作前，通过requst获取请求中的验证三，与session中存储的验证码进行对比。
+			从session中获取完成后，马上删除。
+			
+			在CheckImgServlet中有一句话:
+					request.getSession().setAttribute("checkcode_session", word);
+					
+					String checkCode = request.getParameter("checkcode");
+
+					String _checkCode = (String) request.getSession().getAttribute(
+							"checkcode_session");
+					request.getSession().removeAttribute("checkcode_session");//从session中删除。
+
+					if (!checkCode.equals(_checkCode)) {
+						request.setAttribute("regist.message", "验证码不正确");
+						request.getRequestDispatcher("/regist.jsp").forward(request,
+								response);
+						return;
+					}
+================================================================================================================
+2.登录操作
+	1.登录操作中具有的功能
+		
+		1.请求信息的校验
+			1.客户端校验
+			2.服务器端校验
+		2.请住用户名操作
+		3.自动登录操作
+		4.注销功能
+
+		登录注意事项:
+			1.注意用户是否激活
+			2.注意密码已经进行了md5加密。			
+			用户登录成功后，将用户存储到session中.
+			
+	2.登录代码实现:
+		1.登录基本流程
+			1.在home.jsp页面上有登录窗口。
+			2.创建一个LoginServlet
+				完成登录操作 ,在LoginServlet中
+					1.得到用户名与密码
+					2.调用service完成登录操作.
+					
+			3.在service中判断用户是否可以登录，以及用户是否激活	
+			4.在home.jsp页面上，完成错误信息展示以及用户登录的提示。
+	------------------------------------------------------------
+		2.记住用户名操作
+			原理:当用户登录成功后，会判断用户是否勾选了记住用户名，如果勾选了，将用户名存储到cookie中。
+			    下一次在访问登录页面，直接从cookie中获取用户名，显示在用户名文本框上。
+				
+			问题:cookie中不能存中文？
+				
+				存:Cookie cookie = new Cookie("remember", URLEncoder.encode(user.getUsername(), "utf-8"));
+				取:
+					window.onload=function(){//页面加载成功后跳用这个函数。
+						var username=document.getElementById("username");
+						window.de
+						username.value=window.decodeURIComponent("${cookie.remember.value}","utf-8");
+					};
+				关于删除cookie:
+					1.setMaxAge(0/-1) 0代表立即删除 -1代表关闭浏览器后才删除。 
+					2.删除cookie时，必须与原cookie的path值一致.
+	-----------------------------------------------------------------------
+		3.自动登录
+			原理:用户登录成功，判断是否勾选了自动登录，如果勾选了，将用户名与密码存储到cookie中。
+				需要一个Filter,当用户访问工程时，在Filter中从cookie取出用户名与密码，进行登录操作。
+				
+				注意事项:
+					1.存密码时，注意加密。
+					2.如果用户已经登录，不需要在登录。
+					3.如果访问的资源路径不需要自动登录，那么不进行自动登录。
+					4.第一个用户自动登录，又使用了第二个用户登录，它没有勾选自动登录，
+					  这时，需要将自动登录的cookie删除。
+					  
+	-------------------------------------------------------------------------
+		4.注销	
+			在home.jsp页面有注解的连接。
+				<a href="${pageContext.request.contextPath}/logout">注销</a>
+			创建一个LogOutServlet完成注解功能
+				session.invalidate();
+				
+			问题:销毁session的方式:
+				
+				1.关闭服务器
+				2.invalidate()				
+				3.自动超时
+					在tomcat/conf/web.xml文件中配置超时时间
+					 <session-config>
+						<session-timeout>30</session-timeout>
+					</session-config>
+				4.setMaxInactiveInterval(int interval) 
+					手动设置session超时时间.
+					
+			注意:如果我们有自动登录操作，那么当我们完成注销操作后，会跳转到首页，
+                这时，如果在cookie中存储了用户名与密码，就会进行自动登录，那么
+				注销的效果就看不到了，所以要看到效果，可以将自动登录的cookie删除。
+				
+		问题:
+			1.一个用户在两个浏览器登录
+				要想解决，需要将数据存储到数据库中。
+				可以使用session共享服务器来解决.
+			2.两个用户在同一个浏览器登录
+				会出现共享session问题,简单说，第一个用户购买的物品，存储在session中。
+				第二个用户登录后，直接就可以看到第一个用户购买的商品。				
+				解决方案:在每一个用户登录时，先销毁session.
+============================================================================================================
+商品操作:
+		1.添加商品(上传操作)
+			1.在home.jsp页面上有一个连接
+				<a href="${pageContext.request.contextPath}/addProduct.jsp">添加商品</a>
+				
+			2.创建addProduct.jsp页面
+				问题:页面上有什么组件?
+					查看products表中的数据.
+				文件上传时浏览器端注意:
+					1.method=post
+					2.encType="multipart/form-data"
+					3.<input type="file" name="f">
+				
+			3.根据表中的数据创建Product类
+				private String id; // 商品编号
+				private String name; // 名称
+				private double price; // 价格
+				private String category; // 分类
+				private int pnum; // 数量
+				private String imgurl; // 图片路径
+				private String description; // 描述
+				
+			4.编写AddProductServlet
+				完成添加商品操作----其实是文件上传.				
+				1.DiskFileItemFactory
+				2.ServletFileUpload
+				3.FileItem
+				
+				在这个servlet中要完成两件事情:
+					1.文件上传
+						问题:
+							1.上传文件中文名乱码
+								upload.setHeaderEncoding("utf-8");
+							2.上传文件名称获取?
+								item.getName(); 得到的有可能包含路径。
+								
+							3.上传文件名称重复
+								uuid获取随机名称 
+								
+							4.上传文件随机目录。
+								通过文件名的hashCode进行计算，随机得到目录.
+								
+							5.关于上传文件保存位置
+								对于我们这个项目，上传的商品图片，是允许浏览器直接访问的，
+								所以我们保存到WebRoot下的upload目录下.
+						
+					2.向products表中添加数据。
+						1.得到所有数据封装到Product对象中.
+							BeanUtils.populate(product,Map);
+							这个Map怎样得到?
+								手动创建一个Map<String,String[]> 将数据手动封装.
+								
+							问题:关于id怎样封装?
+								uuid获取.
+							问题:关于imgurl怎样封装?	
+									map.put("imgurl", new String[]{"/upload"+uuidDir+"/"+uuidname})
+						2.调用service,dao完成添加操作.
+						
+						3.添加成功后，跳转到首面.
+					
+					
+				
+		---------------------------------------------------------------	
+		2.查看商品
+			1.查看全部
+				index.jsp---->findAllProduct------->home.jsp
+				1.创建一个FindAllProductServlet
+					在这个servlet中查询出所有商品List<Product>,将其存储到request域，在请求转发到home.jsp页面
+					
+				2.在home.jsp页面展示
+					
+			
+				<div class="art-content-layout overview-table">
+					<div class="art-content-layout-row">
+					<c:forEach items="${ps}" var="p" varStatus="vs">
+						<div class="art-layout-cell">
+							<div class="overview-table-inner">
+								<h4>${p.name }</h4>
+								<img src="${pageContext.request.contextPath}${p.imgurl}" width="55px" height="55px"
+									alt="an image" class="image" />
+								<p>价格: ￥${p.price }</p>
+								<p>速速抢购</p>
+							</div>
+						</div>										
+						<c:if test="${vs.count%5==0}">
+							</div> <!-- 判断当前已经有5个商品了，这 一行结束，在重新开启一行 -->
+							<div class="art-content-layout-row">
+						</c:if>		
+					</c:forEach>
+						<!-- end cell -->
+					</div>
+					
+					<!-- end row -->
+				</div>
+				<!-- end table -->
+			--------------------------------------------------	
+			2.查看商品详细信息		
+				它有两个入口，一个是点击速速抢购.还有点击图片也可以查看商品详细信息.
+					1.<a href="${pageContext.request.contextPath}/findProductById?id=${p.id}">速速抢购</a>
+					2.在图片上添加一个onclick
+						function findProductById(id){
+							location.href="http://www.estore.com/findProductById?id="+id;
+						};
+					查看商品详细信息:
+						1.创建FindProductByIdServlet
+							1.得到商品id
+							2.根据id调用service,dao完成查询商品操作.
+							
+						2.创建productInfo.jsp页面，展示商品信息
+						
+						关于展示商品时，
+							<img>展示商品图片，可以通过它的width与height属性来控制图片的大小。
+							
+						在开发中还有另外一种处理方式：使用商品图片的缩略图。
+							我们可以自己编程，去获取一个上传图片的缩略图。
+							在展示时，直接得到它的缩略图来展示 .
+							
+						在文件上传完成后，添加这两名话就会产生图片的缩略图
+							// 生成缩略图
+							PicUtils putils = new PicUtils(dest.getCanonicalPath());// 获取上传文件的绝对磁盘路径。
+
+							putils.resize(200, 200);// 就会产生一个200*200的缩略图.
+						使用缩略图
+							1.在Product类中添加一个方法
+								public String getImgurl_s() { 
+									int index = imgurl.lastIndexOf(".");
+
+									return imgurl.substring(0, index) + "_s" + imgurl.substring(index);
+								}
+							2.在productInfo.jsp页面上
+								<img src="${pageContext.request.contextPath}${p.imgurl_s}">
+==========================================================================================================
+购物车
+	我们使用的session来存储购物车，在数据库中没有关于购物车中商品信息。
+	1.添加商品到购物车
+		在productInfo.jsp页面有连接。
+		问题:怎样将商品添加到购物车，购物车我们使用什么数据结构来存储商品信息?
+			
+			购物车我们使用Map<Product,Integer>
+			
+			在productInfo.jsp页面上连接，它要传递商品的id
+			function addProductToCart(id){		
+				location.href="${pageContext.request.contextPath}/addProductToCart?id="+id;
+			}
+			
+		创建一个AddProductToCartServlet	
+			1.根据id得到商品
+			2.得到购物车
+			3.将商品添加到购物车
+			
+			注意:我们使用的购物车其实是一个HashMap<Product,Integer>,对于HashMap,它的维护主键唯一性，是使用
+			    key值的hashCode与equals方法，也就是说，对于我们的购物车，它是使用Product的hashCode与equals方法
+				来保证，我们同一个商品的数量的变化.
+				
+				简单说，对于我们就需要重写Product类的equals方法与hashCode方法。
+				
+	--------------------------------------------------------------------------------------
+	2.查看购物车商品
+		有两个入口
+			1.添加商品到购物车成功后，有提示，查看购物车
+			2.在首面有查看购物车
+			
+		查看购物车，我们直接就是一个jsp页面上将购物车中商品展示出来就可以。
+		因为购物车就存储在session中.
+		
+		创建一个showCart.jsp,用于展示购物车中所有商品.
+		
+		
+		购物车中商品总价怎样获取:每个商品的单价*商品数量
+			<c:set var="totalMoney" value="${totalMoney+c.key.price*c.value}"/>
+		
+	-----------------------------------------------------------------------------------------
+	3.改变购物车中商品数量
+		1.加操作
+			点击加按钮，要访问一个servlet,在servlet中，获取购物车中商品，对其数量进行操作.
+			
+			function changeCount(id,count){
+		
+				location.href="${pageContext.request.contextPath}/changeCount?id="+id+"&count="+count;
+			}
+			在服务器端:
+			Product p=new Product();
+			p.setId(id);			
+			cart.put(p, count);
+			
+		问题:怎样控制边界?
+			如果数量减到0，相当于将商品从购物车中删除。
+			如果数量加到比商品库存还大，就让它等于最大值.
+			在js代码中控制
+			//控制边界
+				if (count <= 0) {
+					//删除
+					var flag = window.confirm("要删除商品吗?");
+					if (flag) {
+						count = 0;
+					} else {
+						count = 1;
+
+					}
+				} else if (count >= pnum) {
+					alert("最大购物数量"+pnum);
+					count = pnum;
+				}
+			注意:如果购物数量为0，这时会以服务器端将商品从购物车中删除。
+			
+		关于文本框中数量修改:
+			对于文本框，可以添加一个onblur事件
+			注意：在js中数据是无类型的，操作时，有的进修传参数，想要传递的是一个数值类型，
+			但是，js将其做为字符串处理了，就需要使用parseInt() parseFloat()来转换成数值类型。
+			
+			
+		数字文本框:
+			在<input type="text">这个文本框中只能输入数字，不能输入其它的字符。
+			原理:给文本框添加onkeydown事件，当触发事件时，获取按下的键的键码值，如果它的键码是数字0-9之间的就可以执行，
+			     如果不是，阻止事件的默认行为 .
+				 1.问题:怎样获取按下的键码值
+				 2.问题:怎样阻止事件的默认行为
+				 
+				function a(e){
+					var keyCode;
+					if(e&&e.preventDefault){
+						//判断是firefox浏览器
+						keyCode=e.which;
+					}else{
+						//ie浏览器
+						keyCode=window.event.keyCode;
+					}
+					//alert(keyCode);
+					//0-9之间的键码值是48-57
+					if(!(keyCode>=48&&keyCode<=57||keyCode==8)){
+						//阻止事件的默认行为
+						if(e&&e.preventDefault){
+							// e对象存在，preventDefault方法存在 ---- 火狐浏览器
+							e.preventDefault();
+						}else{
+							// 不支持e对象，或者没有preventDefault方法 ---- IE
+							window.event.returnValue = false;
+						}
+					}
+				}; 
+	---------------------------------------------------------------------------
+	从购物车中删除商品
+		1.连接提交时，将商品id携带到服务器
+			<a href="${pageContext.request.contextPath}/removeProductFromCart?id=${c.key.id}">删除</a>
+		2.创建RemoveProductFromCartServlet	将要删除的商品从购物车中删除
+			// 得到要删除的商品的id
+			String id = request.getParameter("id");
+			// 得到购物车，从购物车中将商品删除,
+			Map<Product, Integer> cart = (Map<Product, Integer>) request
+					.getSession().getAttribute("cart");
+			Product p = new Product();
+			p.setId(id);
+			cart.remove(p);
+
+			//如果购物车中无商品，将购物车删除。
+			if (cart.size() == 0) {
+				request.getSession().removeAttribute("cart");
+			}
+			
+		关于删除商品时的提示处理:
+			方式1:
+				<a href="javascript:void(0)" onclick="removeProduct('${c.key.id}')">删除</a>
+				function removeProduct(id) {
+					var flag = window.confirm("要删除商品码?");
+					
+					if(flag){
+						//要删除
+						location.href="${pageContext.request.contextPath}/removeProductFromCart?id="+id;
+					}
+				}
+				
+			方式2:通过阻止事件的默认行为来控制
+				<a href="${pageContext.request.contextPath}/removeProductFromCart?id=${c.key.id}"
+						onclick="deleteProduct(event)">删除</a>
+				function deleteProduct(e) {
+					var flag = window.confirm("要删除商品码?");
+					if (!flag) {
+						//不删除,阻止连接的默认行为 执行。
+						//阻止事件的默认行为
+						if (e && e.preventDefault) {
+							// e对象存在，preventDefault方法存在 ---- 火狐浏览器
+							e.preventDefault();
+						} else {
+							// 不支持e对象，或者没有preventDefault方法 ---- IE
+							window.event.returnValue = false;
+						}
+					}
+				};
+
+============================================================================================================
+订单操作
+	1.生成订单
+		1.在showCart.jsp页面上，有一个连接，进行结算中心，
+			应该跳转到一个order.jsp页面.在这个页面上输入订单的相关信息。
+			输入完成后，提交信息，生成订单。
+			
+		2.表单提交，访问一个AddOrderServlet,完成生成订单操作.
+			1.将数据封装到Order对象中.
+				Order order=new Order();
+				//它封装了订单的  送货地址,总价.
+				BeanUtils.populate(order, request.getParameterMap());
+				String id=UUID.randomUUID().toString();
+				order.setId(id);//封装订单的id
+				order.setPaystate(0);//默认值为0,代表未支付。如果为1，代表支付.
+				
+				//封装user_id
+				//从session中获取当前用户.
+				User user=(User) request.getSession().getAttribute("user");
+				int user_id=user.getId();
+				order.setUser_id(user_id);
+			问题:我们生成订单，会对几张表操作?
+				
+				1.insert into orders
+				2.insert into orderItem
+				3.update products set pnum=pnum-?;
+				
+			对于订单操作，必须添加事务处理.
+			
+		3.对DataSourceUtils进行修改
+				// 获取绑定到ThreadLocal中的Connection。
+				public static Connection getConnectionByTransaction() throws SQLException {
+					Connection con = tl.get();
+					if (con == null) {
+						con = dataSource.getConnection();
+						tl.set(con);
+					}
+
+					return con;
+				}
+
+				// 开启事务
+				public static void startTransaction(Connection con) throws SQLException {
+					if (con != null)
+						con.setAutoCommit(false);
+				}
+
+				// 事务回滚
+				public static void rollback(Connection con) throws SQLException {
+					if (con != null)
+						con.rollback();
+				}
+
+				public static void closeConnection(Connection con) throws SQLException {
+					if (con != null) {
+						con.commit();// 事务提交
+						con.close();
+						tl.remove();
+
+					}
+				}
+			注意:在dao中在使用QueryRunner时，不要使用有参数构造，要使用无参数构造，
+				使用QueryRunner的batch,update方法时，要带Connection参数，而Connection对象的获取是
+				通过getConnectionByTransaction来获取的。
+				
+	------------------------------------------------------------------------------	
+	查看订单:
+		
+		1.查看订单时，如果当前用户是admin角色，可以查看所有人订单，如果用户是user,只能查看自己订单。
+		
+		2.查看订单实现：
+			1.select * from orders;----->List<Order>
+			2.查询订单中商品的信息。
+			
+		3.代码实现:
+			1.点击查看订单时，访问一个ShowOrderServlet,查询出所有订单信息
+				select * from orders;----->List<Order>
+				将List集合存储到request域，跳转到showOrder.jsp页面在，展示所有信息.
+				
+				response.getWriter().write("订单生成成功，<a href='"+request.getContextPath()+"/showOrder'>查看订单</a>");
+				<a href="${pageContext.request.contextPath}/showOrder"></a>
+				
+			2.在showOrder.jsp页面展示订单:
+				
+			
+			问题：展示订单时，想要显示当前订单是哪个用户的，怎样得到用户名？
+				
+				我们需要将orders与users表关联查询.
+				String sql = "select users.username,users.nickname,orders.* from orders,users where users.id=orders.user_id ";
+				
+				查询出的数据要封装到Order对象中，但是不能封装username,nickname,所以我们在Order类中添加了两个属性
+				private String username;
+				private String nickname;
+				
+			-------------------------------------
+			3.查看订单中商品详细信息 ajax完成
+			
+				1.查找某一个订单中所有商品信息的sql语句
+					SELECT 
+						数据 
+					FROM 
+						orderitem,products 
+					WHERE 
+						orderitem.product_id=products.id 
+					AND 
+						orderitem.order_id="订单id";
+				
+				2.使用ajax完成操作
+					1.得到XMLHttpRequest对象
+					2.onreadstatechange 注册回调函数
+					3.open
+					4.send
+					5.在回调函数中操作.
+					
+					我们查询出订单中商品信息，以json格式返回.
+					
+	---------------------------------------------------------------------------------------------
+	删除订单
+		1.在showOrder.jsp页面有删除订单的连接。点击连接时，将订单的id传递到服务器端，完成根据id删除订单操作.
+		
+			问题:如果订单是已经支付的怎样处理?如果是没有支付怎样处理?
+				我们人为规定，如果是已支付订单，不能删除。如果是未支付订单可以删除。
+				<c:if test="${order.paystate==0}">
+					<a href="#">删除</a>
+				</c:if>				
+				<c:if test="${order.paystate!=0}">
+					删除
+				</c:if>
+			问题:对于未支付订单，删除时，怎样操作?
+				
+				需要做三件事情：
+					1.delete from orders where id=?;
+					2.delte from orderitem where order_id=?
+					3.update products set pnum=pnum+? where id=?;
+					
+				在操作时，需要先删除orderitem表中数据，在删除orders中数据。					
+				我们最后要修改products表中的数据，而它需要的buynum,与product_id都是在orderitem表中存在的。
+				
+				分析完成上面操作，我们在代码实现时，步骤:
+					1.select * from orderitem where order_id=?;----->List<OrderItem>
+					2.delete from orderitem where order_id=?;
+					3.delete from order where id=?
+					4.updat products set pnum=pnum+buynum where id=product_id;
+					
+			我们操作时，需要对多表进行操作，也需要事务控制.
+		2.代码实现:
+			1.在showOrder.jsp页面添加连接路径.
+				<a href="${pageContext.request.contextPath}/delOrder?orderid=${order.id}">删除</a>
+				
+			2.创建DelOrderServlet
+				1.得到要删除的订单id.
+				2.调用service完成删除订单操作.
+				
+			3.在OrderService中创建一个方法 delOrderById(String orderid);
+				在这个方法中.
+				1.开启事务
+				2.根据orderid查询出所有的orderitem中数据.得到一个List<Orderitem>
+				3.根据orderid在orderitem中删除数据
+				4.根据orderid在orders事删除数据
+				5.根据List<OrderItem>在products表中修改数据.
+				6.如果有异常，事务回滚，没问题，事务提交，资源释放。
+					
+	--------------------------------------------------------------------------------
+	订单支付:
+		在线支付---新的知识点
+		
+		1.在showOrder.jsp页面，如果当订单状态是为支付，我们将其设置成一个连接。
+			<a href='${pageContext.request.contextPath}/pay.jsp?orderid=${order.id}&money=${order.money}'>未支付</a>
+		2.创建一个pay.jsp页面，它就是我们的支付页面。
+			在页面上得到订单号，金额信息，并且可以选择支付的银行.
+			
+		3.完成在线支付
+			
+			1.什么是在线支付?在线支付实现方式?
+				通过网络直接完成订单的支付。
+				
+				有两种方式：
+					1.直接与银行做对接
+						优点:不会有延迟。
+						缺点:开发，维护费用比较高.银行接口变动，需要更改。
+						这种方式不适合中小商户。
+					2.使用第三方支付
+						优点:方便，不用处理是怎样支付
+						缺点:有延迟，会收取一定费用。
+						这种方式比较适合中小商户。
+						
+			2.我们使用的是第三方支付
+				
+				现在使用的比较多第三方支付  支付宝  财富通  快钱  
+				我们使用 易宝支付(http://www.yeepay.com/)
+				
+				在线支付条件:
+					1.可以上网。
+					2.需要开通网银.
+					
+				开发在线支付条件:
+					1.可以上网.
+					2.需要一个独立ip.  
+					3.需要在易宝支付申请一个商家账号。  10001126856
+					
+				在线支付流程:
+					查看图
+					
+			--------------------------------------------
+			在线支付代码实现:
+				1.pay.jsp，页面上有订单号，金额以及选择的银行。
+				
+				2.OnLinePayServlet,这个servlet就完成数据的收集，以及向第三方支付发送数据过程.
+					
+					问题:
+						1.要发送给第三方支付的信息有哪些?		
+							
+						2.发送给第三方支付的路径是什么?	
+							https://www.yeepay.com/app-merchant-proxy/node
+							
+
+						以上这两个问题，我们需要查询易宝支付开发手册。
+						
+						重要属性:p8_Url 是易宝支付反馈信息时的路径。
+						
+						hmac=数据+密钥+算法.
+						
+						密钥:L69cl522AV6q613Ii4W6u8K6XuW8vM1N6bFgyv769220IuYe9u37N4y7rI4Pl
+						
+			
+				3.创建一个CallBackServlet,用于接收第三方支付返回的信息.
+					
+					http://www.estore.com/callBack?p1_MerId=10001126856&r0_Cmd=Buy&r1_Code=1&r2_TrxId=315223279200392I&r3_Amt=0.01&r4_Cur=RMB&r5_Pid=&r6_Order=asdflkasdiej&r7_Uid=&r8_MP=&r9_BType=1&ru_Trxtime=20141222105450&ro_BankOrderId=2636414683141222&rb_BankId=BOC-NET&rp_PayDate=20141222105443&rq_CardNo=&rq_SourceFee=0.0&rq_TargetFee=0.0&hmac=1852414bf1f5f63587a59e40cd8c35f2
+						
+					
+					关于第三方返回信息重点:
+						r9_BType  交易结果返回类型
+						为“1”: 浏览器重定向; 如果关闭浏览器，就可能接收不到信息。						
+						为“2”: 服务器点对点通讯.---要求必须返回一个success,否则会一直发送。
+						
+		-----------------------------------------------------------------------------------------------
+		在线支付完成后，修改订单的状态。
+			update order set paystate=1 where id=r6_order;
+			
+=================================================================================================
+	下载销售榜单
+		就是一个文件下载操作.
+		
+		问题:怎样获取到下载文件中的数据？
+			要在已经支付的订单中查找销售的商品名称以及数量。
+			
+			select 
+				products.name,sum(buynum) totalSaleNum
+			from	
+				products,orderitem,orders
+			where
+				orderitem.product_id=products.id
+			and
+				orders.id=orderitem.order_id
+			and
+				orders.paystate=1
+			group by
+				pname
+			order by
+				totalSaleNum
+				
+		下载操作:
+			1.下载榜单连接
+				<a href="${pageContext.request.contextPath}/download">
+			2.创建一个DownloadServlet
+				1.得到数据
+				2.根据数据，通过response.getWriter()流写回到浏览器端.
+						 
+				
+				
+			3. 榜单文件是什么格式？
+			导出Excel 使用 POI类库 
+
+			csv 格式文件 , 逗号分隔文件 
+			1) 信息当中有,在两端加 双引号 
+			2) 信息当中有" 在之前加双引号 转义 
+
+			文件下载 
+			设置Content-Type、Content-Disposition 头信息
+			文件流输出 （输出文件内容）
+
+			Excel 默认读取字符集gbk
+	
+==============================================================================================	
+权限
+	1.url级别权限控制(粗粒度权限控制)
+	
+		原理:得到当前的访问的资源路径,得到当前用户角色，来判断当前用户是否有权限访问该资源.
+			1.得到资源路径.
+				String uri=request.getRequestURI();
+				String contextPath=request.getContextpath();
+				String path=uri.substring(contextPath.length());
+				
+			2.当到当前用户角色，通过角色，判断当前用户是否有权限访问path资源。
+				1.得到当前用户
+					request.getSession().getAttribute("user");
+				2.做配置文件，在配置文件中声明每个角色具有的权限。
+					amdin.properties
+					user.properties.
+					
+		实现:
+			1.添加商品----->admin
+			2.下载榜单----->admin			
+			3.添加商品到购物车  购物车操作。-----user
+			3.关于订单操作     user  admin
+			
+			代码实现:
+				1.创建两个配置文件
+					user.properties  配置关于user角色具有的权限
+					admin.properties 配置关于admin角色具有的权限.
+					将配置文件放置在WEB-INF下.
+				2.创建一个PrivilegeFilter进行权限控制
+					1.在其init方法中将配置文件中内容读取出来装入到admins，users集合中。
+					2.得到请求资源路径，判断是否需要权限.
+				
+				3.创建一个自定义异常，如果权限不足，抛出这个异常。
+					在web.xml文件中配置全局异常处理.
+					<error-page>
+						<exception-type>cn.itcast.estore.exception.PrivilegeException</exception-type>
+						<location>/error/privilege.jsp</location>
+					</error-page>
+=========================================================================================================================	
+	
+
+重构
+	1.一个请求一个servlet,现在要做一个模块一个servlet,也就是说，多个请求会访问同一个servlet.
+		UserServlet  注册   登录  注销   激活
+		CartServlet  关于购物车操作
+		ProductServlet 关于商品操作   注意:我们重构时没有将添加商品处理.
+		OrderServlet   关于订单操作
+		
+	2.对servlet中的操作在进行一次重构
+		原因:
+			在UserServlet中
+				if ("regist".equals(method)) {
+					regist(request, response);
+				} else if ("login".equals(method)) {
+					login(request, response);
+				}
+			在ProductServlet中
+				if ("findProductById".equals(method)) {
+					findProductById(request, response);
+				} else {
+					// 默认就是查询所有.
+					findAllProduct(request, response);
+				}
+		上面的代码，操作是一致的，我们可以在一次进行抽取。生成一个BaseServlet.
+		
+			它的代码
+			String methodName = request.getParameter("method");
+			Method method = this.getClass().getDeclaredMethod(methodName,
+					HttpServletRequest.class, HttpServletResponse.class);
+			method.invoke(this, request, response);
+			
+			举例分析:			
+			http://www.estore.com/user?method=login
+			1.知道要访问的是UserServlet。
+			2.因为UserServlet extends BaseServlet,这时就会访问
+			  BaseServlet中的service方法。
+			3.在BaseServlet中
+				request.getParameter("method");--->login
+				
+			4.得到指定的servlet中指定方法
+				Method method = this.getClass().getDeclaredMethod(methodName,HttpServletRequest.class, HttpServletResponse.class);
+				这句话就相当于得到了UserServlet中的login方法。
+				
+			5.method.invoke(this,request,response);
+				这句话就相录于
+				UserServlet.login(request,response);
+				
+		-----------------------------
+		以上重载操作后，
+			在访问servlet中的方法时，只需要   /url-pattern值?method=方法名。
+
+2.细粒度(annotation+动态代理)
+	
+	原理:在service中的方法上添加一个注解，注解的值代表的是访问这个功能所需要的权限名称。
+		我们的service的获取，是通过一个工厂获取的，而在工厂中返回的是service的动态代理对象。
+		在动态代理中去控制是否有权限访问当前操作。
+		
+		
+	代码实现:
+		1.创建一个注解
+				@Retention(RetentionPolicy.RUNTIME)
+				@Target(ElementType.METHOD)
+				@Inherited
+				public @interface PrivilegeInfo {
+
+					String value();
+				}
+		2.抽取service
+			抽取出接口.例如:
+				public interface ProductService {
+				// 添加商品
+				@PrivilegeInfo("添加商品")
+				public void addProduct(Product p) throws Exception;
+
+				// 查询所有商品
+				public List<Product> findAll() throws Exception;
+
+				// 根据id查询商品
+				public Product findById(String id) throws Exception;
+
+				// 下载榜单数据
+				@PrivilegeInfo("下载榜单")
+				public List<Product> downloadSell(User user) throws PrivilegeException,
+						Exception
+			}
+		3.创建ServiceFactory
+			在serviceFactory中通过动态代理生成一个service代理对象，返回这个代理对象.
+			在servlet中使用的都是通过ServiceFactory获取的service对象，也就动态代理对象。
+			
+			ProductService service = ProductServiceFactory.getInstance();
+		
+		4.在动态代理的InvocationHandler的invoke方法中处理。
+			1.判断方法上是否有注解，也就知道，是否需要权限控制.
+				boolean flag = method
+								.isAnnotationPresent(PrivilegeInfo.class);
+			2.得到注解中的属性值，也就得到了访问该方法的权限名称
+				String pname = method.getAnnotation(
+									PrivilegeInfo.class).value();
+			3.得到当前用户(对于需要权限控制的方法，在其方法的第一个参数，都设置为User)
+				User user = (User) args[0];
+				
+			4.得到user的role,在权限配置文件中查找这个角色所具有的权限名称
+				List<String> pnames = Arrays.asList(ResourceBundle
+									.getBundle("privilege").getString(role)
+									.split(","));
+			5.判断这个角色是否可以执行该方法.
+					if (!pnames.contains(pname)) {
+						throw new PrivilegeException();
+					}
+					
+			问题:抛出异常不跳转到指定的页面？
+				原因:我们操作是在invoke方法中执行的。而invoke方法抛出的是Throwable,我们自己抛出的PrivilegeException，
+					会被包装。					
+					在外面捕获不到。
+					
+					
+					
+			
+		在开如，我们对页面的权限控制可以使用url级别，而对具体的行为执行，可能通过细粒度权限控制。
+			
+			
+	
+	
+				
+			
+			
+			
+								
+		

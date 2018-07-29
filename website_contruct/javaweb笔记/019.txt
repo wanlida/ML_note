@@ -1,0 +1,435 @@
+今天内容
+	1.tomcat内置连接池管理.(了解)
+	2.元数据
+	3.dbutils工具(重点)
+	4.案例
+-------------------------------------------------
+复习:
+	1.事务		
+	2.连接池
+	
+============================================
+1.tomcat内置连接池管理
+		tomcat内置连接池使用的是dbcp。
+		
+		问题1：tomcat怎样管理连接池？（配置）
+			要想将一个dbcp连接池让 tomcat管理，只需要创建一个context.xml配置文件,在配置文件中
+			配置相关信息，
+			<Context>
+			  <Resource name="jdbc/EmployeeDB" auth="Container"
+						type="javax.sql.DataSource" username="root" password="abc"
+						driverClassName="com.mysql.jdbc.Driver" url="jdbc:mysql:///day18"
+						maxActive="8" maxIdle="4"/>
+			</Context>
+			问题:context.xml文件位置:
+				1.在tomcat/conf/context.xml     这时这个连接池是给整个服务器使用的。
+				2.在tomcat/conf/Catalina/localhost 这时这个连接池只给localhost虚拟主机使用。
+				3.将context.xml文件放置在web应用的META-INF下
+				
+				注意：如果是全局设置，那么我们需要将数据库驱动放置在tomcat/lib目录下
+
+		
+		问题2:怎样从tomcat中获取连接池?
+			我们在servlet中获取连接池对象。
+			Context context = new InitialContext();
+			Context envCtx = (Context)context.lookup("java:comp/env"); 固定路径
+			DataSource datasource = (DataSource) envCtx.lookup("jdbc/EmployeeDB"); 
+			
+		JNDI----->	JNDI(Java Naming and Directory Interface,Java命名和目录接口)是SUN公司提供的一种标准的Java命名系统接口，
+					JNDI提供统一的客户端API，通过不同的访问提供者接口JNDI SPI的实现，由管理者将JNDI API映射为特定的命名服务
+					和目录系统，使得Java应用程序可以和这些命名服务和目录服务之间进行交互。目录服务是一种命名服务，
+					在这种服务里，对象不但有名称，还有属性。
+--------------------------------------------------------------------------------------------					
+2.元数据			
+	问题:元数据是什么，有什么作用?	
+		元数据(metaData)  指数据库中 库、表、列的定义信息 
+		
+		1.DataBaseMetaData 数据库元数据（了解）
+			问题:怎样获取一个DataBaseMetaData?
+				
+				Connection接口中定义了一个方法 getMetaData();
+				
+			问题:常用API
+				
+				String driverName = dmd.getDriverName(); //获取驱动名称
+				System.out.println(driverName);
+				
+				String userName = dmd.getUserName();//获取用户名
+				System.out.println(userName);
+				
+				String url = dmd.getURL();//获取url
+				System.out.println(url);
+				
+				String databaseProductName = dmd.getDatabaseProductName(); //获取数据库名称
+				System.out.println(databaseProductName);
+				
+				String databaseProductVersion = dmd.getDatabaseProductVersion();//获取数据库版本.
+				System.out.println(databaseProductVersion);
+				
+				ResultSet getPrimaryKeys(String catalog,
+                         String schema,
+                         String table)
+                         throws SQLException
+				获取表中主键相关描述
+					每个主键列描述都有以下列：
+					TABLE_CAT String => 表类别（可为 null） 
+					TABLE_SCHEM String => 表模式（可为 null） 
+					TABLE_NAME String => 表名称 
+					COLUMN_NAME String => 列名称 
+					KEY_SEQ short => 主键中的序列号（值 1 表示主键中的第一列，值 2 表示主键中的第二列）。 
+					PK_NAME String => 主键的名称（可为 null）
+				
+			
+		2.ParameterMetaData 参数元数据
+			参数元数据主要用于获取:sql语句中占位符的相关信息.
+			
+			问题:怎样获取ParameterMetaData?
+				在PreparedStatement中有一个方法getParameterMetaData可以获取.
+				
+			问题:怎样使用?
+				int count = pmd.getParameterCount(); // 获取参数 个数
+				System.out.println(count);
+				
+				String type1 = pmd.getParameterTypeName(1);//获取参数的类型
+				System.out.println(type1);
+				
+				注意：在获取参数类型时会产生异常
+					java.sql.SQLException: Parameter metadata not available for the given statement
+				解决方案:
+					在url后添加参数
+					jdbc:mysql:///day18?generateSimpleParameterMetadata=true
+				添加这个参数后，我们在获取，它的结果也是varchar,原因:是mysql驱动的支持问题。	
+			
+		3.ResultSetMetaData 结果集元数据
+			
+			问题:怎样获取结果集元数据?
+				可以通过ResultSet的getMetaData()方法获取.
+				
+			问题:怎样使用?
+				System.out.println(rsmd.getColumnCount());//获取结果集中列数量
+		
+				System.out.println(rsmd.getColumnName(2));//获取结果集中指定列的名称.
+				
+				System.out.println(rsmd.getColumnTypeName(3));//获取结果集中指定列的类型。
+=============================================================================================================
+3.dbutils工具
+	问题:dbutils是什么，有什么作用?
+		它就是一个简单的jdbc封装工具.
+		使用dbutils可以简化操作.
+		要使用dbutils需要导入jar包. 
+		
+	dbutils核心
+		1.QueryRunner类
+			它是用于执行sql语句的类。
+			1.query 用于执行select 
+			2.update 用于执行update delete insert
+			3.batch 批处理
+		2.ResultSetHandler接口
+			用于定义结果集的封装				
+			它提供九个实现类，可以进行不同的封装。
+		3.DbUtils类
+			它提供关于关闭资源以及事务rollback,commit操作。
+	-----------------------------------------------------
+	Dbutlis详解
+		1.QueryRunner
+			1.QueryRunner怎样获取
+				1.new QueryRunner()
+					如果是使用这种构造创建的QueryRunner,它的事务是手动控制.
+				2.new QueryRunner(DataSource ds);
+					如果是使用这种构造，它的事务是自动事务，简单说，一条sql一个事务。
+				
+			2.QueryRunner中的三个核心方法
+				query
+				update
+				batch
+				对于上述三个方法，它们提供很多重载。
+				如果QueryRunner在创建时，没有传递DataSource参数，那么在使用
+				query,update,batch方法时，要传递Connection参数
+				如果QueryRunner在创建时，传递了Dataource参数，好么在使用
+				query,update,batch方法时，不需要传递Connection参数。
+				
+			总结:
+				怎样配套使用:
+					QueryRunner runner=new QueryRunner();
+					runner.query(Connection,sql,ResultSetHandler,Object... param);
+					runner.update(Connection,sql,Object...param);
+					runner.batch(Connection con,sql,Object[][] objs);
+					
+					QueryRunner runner=new QueryRunner(DataSource ds);
+					runner.query(sql,ResultSetHandler,Object... param);
+					runner.update(sql,Object...param);
+					runner.batch(sql,Object[][] objs);
+					
+		-----------------------------------------------------------------			
+		ResultSetHandler接口	
+			用于封装结果集.
+			
+	============================================================================
+	模仿QueryRunner
+		1.query方法模仿
+			public <T> T query(Connection con, String sql, MyResultSetHandler<T> mrs,Object... params) throws SQLException {
+
+					PreparedStatement pst = con.prepareStatement(sql); // 得到一个预处理的Statement.
+					// 问题:sql语句中可能存在参数，需要对参数赋值。
+
+					ParameterMetaData pmd = pst.getParameterMetaData();
+					// 可以得到有几个参数
+					int count = pmd.getParameterCount();
+					for (int i = 1; i <= count; i++) {
+						pst.setObject(i, params[i - 1]);
+					}
+
+					ResultSet rs = pst.executeQuery(); // 得到了结果集，要将结果集封装成用户想要的对象，但是，工具不可能知道用户需求。
+
+					return mrs.handle(rs);
+				}
+		2.update方法模仿
+			public int update(Connection con, String sql, Object... params) throws SQLException {
+
+				PreparedStatement pst = con.prepareStatement(sql); // 得到一个预处理的Statement.
+				// 问题:sql语句中可能存在参数，需要对参数赋值。
+
+				ParameterMetaData pmd = pst.getParameterMetaData();
+				// 可以得到有几个参数
+				int count = pmd.getParameterCount();
+				for (int i = 1; i <= count; i++) {
+					pst.setObject(i, params[i - 1]);
+				}
+
+				int row = pst.executeUpdate();
+				// 关闭资源
+				pst.close();
+				return row;
+			}
+===============================================================================	
+ResulsetHandler九个实现类
+			
+			 ArrayHandler, 将结果集中第一条记录封装到Object[],数组中的每一个元素就是记录中的字段值。
+			 ArrayListHandler, 将结果集中每一条记录封装到Object[],数组中的每一个元素就是记录中的字段值。在将这些数组装入到List集合。
+			
+			 BeanHandler（重点）, 将结果集中第一条记录封装到一个javaBean中。
+			 BeanListHandler(重点), 将结果集中每一条记录封装到javaBean中，在将javaBean封装到List集合.
+			 
+			 ColumnListHandler, 将结果集中指定列的值封装到List集合.
+			 
+			 MapHandler, 将结果集中第一条记录封装到Map集合中，集合的 key就是字段名称，value就是字段值
+			 MapListHandler, 将结果集中每一条记录封装到Map集合中，集合的 key就是字段名称，value就是字段值，在将这些Map封装到List集合
+			 
+			 KeyedHandler,在使用指定的列的值做为一个Map集合的key,值为每一条记录的Map集合封装。
+			 ScalarHandler 进行单值查询 select count(*) from account;
+			 
+		---------------------------------------------------------
+		扩展:实现BeanHandler
+			使用BeanUtils实现
+				Object obj = null;
+
+				Map<String, String[]> map = new HashMap<String, String[]>();
+
+				ResultSetMetaData md = rs.getMetaData();
+				int count = md.getColumnCount();
+
+				if (rs.next()) {
+					try {
+						obj = clazz.newInstance();
+						for (int i = 1; i <= count; i++) {
+							map.put(md.getColumnName(i),
+									new String[] { rs.getString(md.getColumnName(i)) });
+						}
+						BeanUtils.populate(obj, map);
+					} catch (InstantiationException e) {
+						e.printStackTrace();
+					} catch (IllegalAccessException e) {
+						e.printStackTrace();
+					} catch (InvocationTargetException e) {
+						e.printStackTrace();
+					}
+
+				}
+
+				return obj;
+		
+---------------------------------------------------	
+----------------------------------------------------
+练习:
+	登录成功后，访问到一个页面success.jsp，在页面上添加一个连接
+	
+	就是客户信息的CRUD操作.
+	
+	1.客户信息
+	
+		字段名	说明	类型
+		Id	编号	varchar(40)
+		name	客户姓名	varchar(20)
+		gender	性别	varchar(10)
+		birthday	生日	date
+		cellphone	手机	varchar(20)
+		email	电子邮件	varchar(40)
+		preference	客户爱好	varchar(100)
+		type	客户类型	varchar(40)
+		description	备注	varchar(255)
+
+		create table customer(
+		   id varchar(40) primary key,
+		   name varchar(20),
+		   gender varchar(10),
+		   birthday date,
+		   cellphone varchar(20),
+		   email varchar(40),
+		   preference varchar(100),
+		   type varchar(40),
+		   description varchar(255)
+		);
+	2.搭建环境
+		JavaEE 三层结构 
+		Servlet + JSP + JavaBean+jstl + DBUtils+ DAO + MySQL 
+
+		导入jar包 ：JSTL 、BeanUtils、DBUtils、C3P0、mysql驱动 
+
+		创建包结构 
+		cn.itcast.customer.web  表现层
+		cn.itcast.customer.service 业务层
+		cn.itcast.customer.dao 持久层
+		cn.itcast.customer.utils 工具包
+		cn.itcast.customer.domain 实体类  javaBean
+
+
+		应用的jar文件
+		1.	mysql驱动包
+		2.	c3po包
+		3.	dbutils包
+		4.	BeanUtil包
+		5.	JSTL包
+		6.	c3p0的配置文件
+		
+	------------------------------------------------------
+	编写代码:
+		1.创建Customer这个javaBean
+			private String id;
+			private String name;
+			private String gender;
+			private Date birthday;
+			private String cellphone;
+			private String email;
+			private String preference;
+			private String type;
+			private String description;
+			
+		2.为了测试方便，向customer表中插入数据
+			insert into customer values("a11","tom","男","2010-10-10","13888888888","tom@163.com","吃,喝,玩","vip","good man");
+			insert into customer values("a11","fox","男","2000-10-10","13888888888","tom@163.com","吃,喝,玩","vip","good man");
+			insert into customer values("a11","james","男","1990-10-10","13888888888","tom@163.com","吃,喝,玩","vip","good man");
+			
+			 
+		3.实现查询所有客户信息操作
+			1.在success.jsp页面添加连接
+				<a href="${pageContext.request.contextPath}/findAll">查看所有客户信息</a>
+			2.在CustomerFindAllServlet中调用service,在service中调用dao,最后得到一个List<Customer>.
+
+			3.在showCustomer.jsp页面展示客户信息
+				<c:forEach items="${cs}" var="c">
+					<tr>
+						<td><input type="checkbox">
+						</td>
+						<td>${c.id }</td>
+						<td>${c.name}</td>
+						<td>${c.gender }</td>
+						<td>${c.birthday }</td>
+						<td>${c.cellphone }</td>
+						<td>${c.email }</td>
+						<td>${c.preference }</td>
+						<td>${c.type }</td>
+						<td>${c.description }</td>
+						<td><a>编辑</a>&nbsp;&nbsp;&nbsp;<a>删除</a></td>
+					</tr>
+				</c:forEach>
+				
+	----------------------------------------------------------
+		4.删除操作
+			1.在showCustomer.jsp页面的删除连接上添加参数  客户的id
+				<a href="${pageContext.request.contextPath}/delByid?id=${c.id}">删除</a>
+			2.创建一个CustomerDelByIdServlet,获取请求参数,调用service中删除方法.
+			
+			问题:如果删除完成后，怎样处理?
+				需要重新跳转到查询所有的servlet中，在重新查询数据。
+				
+	----------------------------------------------------------------------
+		5.编辑
+			1.查询，做回显示
+					<a href="${pageContext.request.contextPath}/findById?id=${c.id}">编辑</a>
+				1.创建CustomerFindByIdServlet,得到要查询的id,调用service，得到Custonmer对象。
+				
+				2.将customer对象存储到request域，请求转发到customerInfo.jsp页面。
+				
+				3.在customerInfo.jsp页面展示客户信息
+				
+				注意:客户的id不能修改，所以使用<input type="hidden">
+			2.修改
+				
+				1.注意使用BeanUtils时的类型转换问题
+					
+				2.注意编码问题	
+					post:request.setCharacterEncoding("utf-8");
+					get:手动转换  new String(request.getParameter(name).getBytes("iso8859-1"),"utf-8");
+				
+				3.进行修改操作
+					String sql = "update customer set name=?,gender=?,birthday=?,cellphone=?,email=?,preference=?,type=?,description=? where id=?";
+					修改完成后，在重新查询一次
+					response.sendRedirect(request.getContextPath() + "/findAll");
+					
+================================================================================================
+	解决关于回显示时的问题:
+		1.性别 应该使用radio
+		
+			使用自定义标签
+				1.定义标签类   extends SimpleTagSupport
+				2.定义tld文件
+					<tag>
+						<name>sex</name><!-- 标签名称 -->
+						<tag-class>cn.itcast.customer.tag.GenderTag</tag-class><!-- 标签类 -->
+						<body-content>empty</body-content><!-- 标签体中内容 -->
+
+						<attribute>
+							<name>gender</name> <!-- 属性名称 -->
+							<required>true</required> <!-- 属性必须有 -->
+							<rtexprvalue>true</rtexprvalue><!-- 属性值可以接收el表达式 -->
+						</attribute>
+					</tag>
+				3.在页面上使用
+					1.使用taglib导入
+					2.使用
+						<my:sex gender="${c.gender}" />
+						
+	---------------------------------------------------------------
+	使用虚拟主机可以将项目部署成顶级域名
+		
+		1.在service.xml文件
+			1.端口修改为80
+			2. 配置主机
+			  <Host name="www.customer.com"  appBase="D:\java1110\workspace\day19_2"
+					unpackWARs="true" autoDeploy="true">
+
+			  
+				<Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs"
+					   prefix="localhost_access_log." suffix=".txt"
+					   pattern="%h %l %u %t &quot;%r&quot; %s %b" />
+
+					   <Context path="" docBase="D:\java1110\workspace\day19_2\WebRoot" />
+			  </Host>
+			3.在hosts文件中配置
+				127.0.0.1  www.customer.com
+				
+	==================================================================	
+	作业
+		1.将注册与登录与customer练习结合。
+		
+		2.完成我所有操作
+		
+		3.添加操作
+			
+		4.批量删除（选做）
+			
+			
+					
+					
+				
+			

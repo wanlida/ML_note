@@ -1,0 +1,496 @@
+今天内容:
+	1.注解(annotation)(次重点)
+	2.servlet3.0特性(了解)
+	3.动态代理（重点）
+	4.类加载器(了解)
+	5.泛型反射(次重点)
+----------------------------------------------------
+ajax：
+	实现省市级联（xm,json）	
+	
+	1.xml实现
+		1.ajax步骤
+			1.得到XMLHttpRequest对象
+			2.注册回调函数
+			3.open设置请求方式与url
+			4.send发送请求
+			5.在回调函数中完成操作.			
+		2.XMLHttpRequest的readyState状态（笔试）
+			0:XMLHttpReqeust对象创建
+			1:open
+			2:send
+			3:只接收了响应头，
+			4:响应完成响应头与体全部返回。
+			
+	注意:如果服务器返回的是json数据，我们在浏览器端接收数据 eval()转换。
+		var json=eval(xmlhttp.responseText);
+		有些情况下，转换会出问题。
+		var json=eval("("+xmlhttp.responseText+")")
+		
+--------------------------------------------------------------------------
+1.注解
+	问题:什么是注解，它有什么作用?
+		@xxx就是一个注解。		
+		注释:它是用于描述当前代码功能，是给程序员使用的。
+		注解：它是描述程序如果运行，是给编译器，解释器，jvm使用。
+			
+	jdk中自带三个注解:
+		1.@Override
+			是给编译器使用，用于描述当前的方法是一个重写的方法。
+			
+			注意:在jdk1.5与jdk1.6中有区别
+				jdk1.5中@Override它只能描述继承中的重写.
+				jdk1.6中@Override它不仅能描述继承中的重写，还可以描述实现中的重写.
+			
+		2.@Deprecated
+			它是用于描述方法过时。
+			
+			问题:方法什么时候过时?
+				1.有新的版本的方法替换旧版本方法。
+				2.在旧的版本中存在安全隐患的方法
+		3.@SuppressWarnings
+			去除程序中的警告信息		
+			unused 变量未使用
+			deprecation 使用了不赞成使用的类或方法时的警告
+			unchecked 执行了未检查的转换时的警告，例如当使用集合时没有用泛型 (Generics) 来指定集合保存的类型。
+			fallthrough 当 Switch 程序块直接通往下一种情况而没有 Break 时的警告。
+			path 在类路径、源文件路径等中有不存在的路径时的警告。?
+			serial 当在可序列化的类上缺少 serialVersionUID 定义时的警告。?
+			finally 任何 finally 子句不能正常完成时的警告。
+			all 关于以上所有情况的警告。
+			
+	-------------------------------------------------------
+	关于定义注解
+		
+		1.定义注解
+			@interface 名称  就定义了一个注解，要想使用  在类，方法，属性上直接  @名称.
+		
+			问题:@interface 名称,是声明了一个注解，它的本质是什么?
+			
+			@interface MyAnnotation{}
+			它的本质就是
+			
+			import java.lang.annotation.Annotation;
+
+			interface MyAnnotation extends Annotation
+			{
+			}
+			注解的本质就是一个接口，它继承了Annotation接口。
+			所的的注解都实现了这个接口，但是，不能手动实现。
+			
+			注解是jdk1.5的新特性.
+		------------------------------------------------------	
+		2.注解中的成员
+			
+			接口中的成员:
+				属性:public static final
+				方法: public abstract
+				
+			注解成员:
+				1.可以有属性
+					注解中可以有属性，但是基本不使用。
+				2.可以有方法
+			
+				在开如，一般使用注解时，只研究它的方法，我们一般管它叫做注解中的属性.
+				
+			1.关于注解中的属性的类型问题.
+				它的类型只能是以下几种:
+					1.基本类型
+						整型:byte short int long
+						浮点:float double
+						字符:char
+						逻辑:boolean
+					2.String
+					3.Class
+					4.enum
+					5.Annotation
+					6.以上类型的一维数组。
+			
+			2.关于注解中有属性，使用的问题
+				如果一个注解中有属性，并且属性没有默认值，那么我们在使用注解时，必须给注解的属性赋值.
+				
+				关于属性赋值方式:
+					
+					1.默认值问题
+						String st() default "abc";
+						
+					2.如果是单值
+					
+						注解(属性名称=值)
+						例如:@MyAnnotation3(i=1)
+					3.如果是数组
+						1.如果只赋一个值
+							注解(属性名称=值)
+							例如:@MyAnnotation3(i=1)
+						2.如果要赋多个值
+							注解(属性名称={值1,值2,...})
+							例如:@MyAnnotation3(i={1,2,3})
+						
+					4.关于属性名称value问题
+						可以省略属性名称
+							例如 @MyAnnotation3("hello");
+							
+						如果value属性是一个数组:
+							@MyAnnotation3({"a","b"})
+							
+						如果注解中有value属性，还有其它属性:
+							那么value属性名称不能在省略.
+		------------------------------------------------------------------					
+			3.元注解
+				修饰注解的注解
+				1.@Retention
+					作用:是指定注解给谁使用.
+					
+					它的属性值只能是以下三个
+						RetentionPolicy.SOURCE  给编译器使用  使用后抛弃
+						RetentionPolicy.CLASS   给解析器使用。当jvm加载完成后，就抛弃.			  			
+						RetentionPolicy.RUNTIME	jvm加载完成后，还存在。开发人员可以通过反射来获取注解相关信息.					
+						
+				2.@Target
+					作用:就是定义注解在什么位置使用
+				3.@Documented
+					作用:是通过javadoc生成的文档中是否抽取注解描述.
+				4.@Inherited
+					作用:是描述当前注解是否具有继承性
+					
+				想要开发，有功能的注解，对于程序员，一定会使用的元注解是:
+					@Retention
+					@Target
+		------------------------------------------------------------------------
+		注解案例---银行最大转账金额:
+			这个案例的目的:
+				1.怎样通过反射来操作注解
+				2.注解可以替换配置文件。
+				
+			代码实现:
+				1.将银行最大转账金额，定义在配置文件中，使用时，直接从配置文件中读取.
+				
+				2.使用注解来替换配置文件。
+					1.定义一个注解
+						@Retention(RetentionPolicy.RUNTIME)
+						@Target(ElementType.METHOD)
+						public @interface BankInfo {
+
+							int maxMoney();
+						}
+					
+					2.通过反射来获取注解信息						
+						1.获取当前方法的Method对象。
+							1.得到Class对象
+								1.类名.class
+								2.对象.getClass()
+								3.Class.forName(String className);
+							2.得到Method对象
+								Class.getDeclaredMethod(String methodName,Class...paramClass);
+						2.在Method类中有一个 getAnnotation(Class annotationClass)，可以获取一个注解对象.
+						
+						3.通过注解对象来调用其属性.
+						
+
+				-----------------------------------------------
+				注解可以替换配置文件，替换的是什么?
+					配置文件的出现，它的主要目的就是解耦合。但是随着现在开发程序越来越庞大，配置文件的缺点
+					就出现了，配置文件内容越来越庞大，就不利于我们开发与阅读.					
+					这时就出现了注解，因为注解可以直接写在代码上，并且，通过注解也可以解耦合。
+					
+	----------------------------------------------------------------------------------------------	
+	注解示例2--jdbc连接
+		
+							
+				
+=====================================================================================================================
+2.servlet3.0特性(了解)
+
+	在servlet3.0中可以使用注解来替代我们配置文件.
+	简单说:在servlet3.0中可以没有web.xml文件。
+	
+	servlet3.0
+	servlet2.5
+	问题：怎样知道我们当前使用的是哪个版本?
+		在web.xml文件中有一个属性version=""它就可以标识当前是哪个版本.
+		
+	版本对应关系
+		
+	servlet2.5    javaee5.0  tomcat 5.x tomcat6	  jdk1.5
+	servlet3.0    javaee6.0  tomcat7.0            jdk1.6
+	------------------------------------------------------
+	关于servlet3.0特性:
+		1.使用注解来替换配置文件
+			@WebServlet("/hello") 用于配置servlet
+			@WebFilter("/*")      用于配置Filter
+			@WebListener          用于配置Listener
+
+			关于这些注解细节:
+				以@WebServlet("/hello") 为例
+				
+				注意:属性urlpatterns与values它们都是描述访问当前servlet的路径，但它们不能一起出现，只能使用一个.
+				
+				<servlet>
+					<servlet-name></servlet-name>   String name() default "";
+					<servllet-class></servlet-class>
+					<init-param>       WebInitParam[] initParams() default {};
+						<param-name>
+						<param-value>
+					</init-param>
+					<load-on-startup>     int loadOnStartup() default -1;
+				</servlet>
+				
+				<servlet-mapping>
+					<servlet-name></servlet-name>
+					<url-pattern></url-pattern>     String[] urlPatterns() default {};   String[] value() default {};
+				</servlet-mapping>
+				
+				
+				在servlet中怎样获取初始化参数
+					ServletConfig对象获取
+			
+				在web.xml文件中的属性 metadata-complete,可以取值为true,false,
+				如果为false,代表servlet3.0中的注解可以使用，如果为true,代表不可以使用注解。
+				
+				
+					
+		2.servlet3.0中的文件上传
+			
+			浏览器端:
+				1.method=post
+				2.encType="multipart/form-data"
+				3.使用<input type="file" name="f">
+			
+			服务器端:
+				servlet3.0完成。
+				
+				1.要在servlet上添加注解@MultipartConfig  
+					表示Servlet接收multipart/form-data 请求
+				2.在servlet中要想得到上传信息，通过request对象获取一个Part对象。
+					Part part=request.getPart();
+					
+					part.write(String filename);
+					
+					问题:
+						 1.关于上传文件中文名称乱码问题
+							因为上传是post请求，直接使用post乱码解决方案就可以  request.setCharacterEncoding("utf-8");
+						 2.关于获取上传文件名称 
+							通过Part获取一个header
+								String cd = part.getHeader("Content-Disposition");
+							在这个header中包含了上传文件名称，直接截取出来就可以。							
+								String filename = cd.substring(cd.lastIndexOf("\\") + 1,cd.length() - 1);
+						 3.如果多文件上传怎样处理?
+								request.getParts();
+		
+		3.servlet3.0中异步处理
+			本质就是在服务器端开启一个线程，来完成其它的操作。
+			
+			1.必须在注解添加一项
+				@WebServlet(value = "/reg", asyncSupported = true)
+				asyncSupported=true,代表当前servlet支持异步操作.
+				
+			2.需要一个异步 上下文对象，通过这个对象，可以获取request,response对象.
+			
+				AsyncContext context = req.startAsync();	
+				
+				还可以对异步上下文进行监听，在它的监听器方法中有一个onComplete,可以用于判断结束。
+				
+=============================================================================================================
+3.动态代理
+					
+	1.代理模式
+		代理模式作用:
+			屏蔽真实行为的访问，让程序更加安全。
+			可以对真实行为的调用进行控制。
+			
+		通过一个案例：来说明代理的实现以及代理的作用
+			
+			代理模式实现:
+				1.代理类与被代理类要实现同一个接口.
+				2.在代理类中持有被代理对象.
+				3.在代理类中调用被代理的行为。
+				
+		AOP：面向方面的编程。
+			AOP的底层实现就是通过动态代理来做到的。
+			
+	2.动态代理
+		它就是在代理模式基础上发展的，它不在是对单一的类型进行代理，
+		而是可以对任意的一个实现了接口的类的对象做代理。
+		
+		
+	3.动态代理实现
+		有两种方式:
+			1.通过jdk中提供的Proxy类来实现
+				这种方式要求，被代理类必须实现接口。
+				简单说，只能为接口做代理.
+			2.通过cglib来实现。
+				它不要求，实现接口。
+				
+			我们讲第一个.
+			
+			代码实现:
+				
+				Proxy类中有一个方法newProxyInstance(ClassLoader loader,Class[] interfaces,InvocationHandler h);
+				
+				参数:
+					loader:
+						要求，传递的是被代理类的类加载器ClassLoader.
+						
+						类加载器怎样获取:
+							得到其Class对象。在Class类中提供一个方法  getClassLoader();
+						
+					interfaces:
+						要求:得到被代理对象所实现的接口的所有Class对象。
+						怎样获取所有实现接口的Class对象?
+							得到其Class对象，在Class类中提供一个方法  getInterfaces();
+							它返回的是Class[],就代表所实现接口的所有Class对象。
+					
+					h:
+						它的类型是InvocationHandler，这是一个接口。
+						InvocationHandler 是代理实例的调用处理程序 实现的接口。
+				
+			
+					InvocationHandler接口中有一个方法invoke;
+						// 参数 proxy就是代理对象
+						// 参数method就是调用方法
+						// 参数args就是调用的方法的参数
+						// 返回值,就是真实行为执行后返回的结果，会传递给代理对象调用的方法.
+						public Object invoke(Object proxy, Method method, Object[] args);
+				
+	--------------------------------------------------------------------------------------------------
+	动态代理案例1---实现编码过滤.
+		
+		final HttpServletRequest req = (HttpServletRequest) request;
+		HttpServletResponse resp = (HttpServletResponse) response;
+
+		// 2.操作
+		// 创建一个req对象的代理对象reqProxy
+		HttpServletRequest reqProxy = (HttpServletRequest) Proxy
+				.newProxyInstance(req.getClass().getClassLoader(), req
+						.getClass().getInterfaces(), new InvocationHandler() {
+
+					public Object invoke(Object proxy, Method method,
+							Object[] args) throws Throwable {
+
+						// 1.得到方法名称
+						String methodName = method.getName();
+						if ("getParameter".equals(methodName)) {
+							String param = req.getParameter((String) (args[0]));
+
+							return new String(param.getBytes("iso8859-1"),
+									"utf-8");
+
+						} else {
+							// 不是getParameter方法，就执行其原来操作.
+							return method.invoke(req, args);
+						}
+					}
+				});
+		// 3.放行
+		chain.doFilter(reqProxy, resp);
+=============================================================================================
+	案例--动态代理+注解实现的细粒度的权限控制.
+		create table users(
+		  id int primary key auto_increment,
+		  username varchar(40),
+		  password varchar(40)
+		);
+
+		insert into users values(null,'aaa','111');
+		insert into users values(null,'bbb','111');
+		insert into users values(null,'ccc','111');
+
+
+		create table privileges(
+		   id int primary key auto_increment,
+		   name varchar(40)
+		);
+
+		insert into privileges values(null,'添加图书');
+		insert into privileges values(null,'修改图书');
+		insert into privileges values(null,'查看图书');
+		insert into privileges values(null,'删除图书');
+
+		多对多表关系
+		create table userprivilege(
+		   user_id int ,
+		   privilege_id int,
+		   foreign key(user_id) references users(id),
+		   foreign key(privilege_id) references privileges(id),
+		   primary key(user_id,privilege_id)
+		);
+
+		insert into userprivilege values(1,1);
+
+	
+
+		------------------------------------
+		代码实现:
+			1.完成登录操作，将user存储到session中.
+				login.jsp  LoginServlet  UserService  UserDao.
+				
+			2.登录成功，跳转到book.jsp页面。
+				在这个页面上有四个超连接，访问的是同一个servlet（BookServlet）
+				
+				问题:怎样让一个servlet处理多个请求？
+					可以通过在请求，携带参数来判断要做什么操作.
+					
+				<a href="${pageContext.request.contextPath}/book?method=add">book add</a>
+				<br>
+				<a href="${pageContext.request.contextPath}/book?method=update">book update</a>
+				<br>
+				<a href="${pageContext.request.contextPath}/book?method=delete">book delete</a>
+				<br>
+				<a href="${pageContext.request.contextPath}/book?method=search">book search</a>	
+				
+		
+				在servlet中判断method值是什么，调用不同的请求处理方法.
+				
+				这种方式下，在做权限控制时，如果使用url级别权限控制，就不能通过判断请求的资源路径来处理。
+				
+				可以使用细粒度权限控制:
+						实现原理:使用注解+动态代理来完成。
+						
+							注解:它用于定义当前行为的访问需要什么权限.
+							    动态代理帮助我们完成控制拦截。简单说，就是在代理中，会判断当前用户是否具有访问该行为的权限	
+								如果有，会调用被代理的行为，如果没有，不调用行为，直接抛出权限不足。
+
+			3.实现权限控制
+			
+				1.创建一个BookInfo注解，它是用于描述行为访问时，需要什么权限的.
+				
+					@Retention(RetentionPolicy.RUNTIME)
+					@Target(ElementType.METHOD)
+					@Inherited
+					public @interface BookInfo {
+						
+						String value(); //这就是权限名称
+					}
+				2.在BookServiceFactory中进行权限控制
+				
+					1.得到当前行为访问需要的权限名称
+						BookInfo bif = method.getAnnotation(BookInfo.class);
+						String pname = bif.value();
+						
+					2.得到当前登录的用户
+						我们在所有的service的方法上添加了一个User参数。
+						那么我们获取时，就可以直接通过invoke方法的args参数获取.
+						User user = (User) args[0];
+						
+						1.首先判断用户是否存在，也就是判断它是否登录了。
+						
+						2.如果登录了，根据用户查询数据库，得到这个用户所具有的所有权限名称
+							SELECT 
+								privileges.name 
+							FROM 
+								users,PRIVILEGES,userprivilege 
+							WHERE 
+								users.id=userprivilege.user_id 
+							AND 
+								privileges.id=userprivilege.privilege_id 
+							AND 
+								users.id=?";
+
+					
+					
+				
+					
+				
+			
+
+		

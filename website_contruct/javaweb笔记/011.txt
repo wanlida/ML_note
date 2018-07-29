@@ -1,0 +1,210 @@
+* 课程回顾：
+	* response对象（响应）
+		* 响应行
+			* 状态码	:setStatus(int a)	设置状态码		302重定向		304控制缓存
+		* 响应头
+			* setHeader()	一个key对应一个value
+			* addHeader()	一个key对应多个value
+		* 响应体
+			* getOutputStream()	字节输出流
+			* getWriter()		字符输出流
+			
+		* 案例：重定向到登陆页面
+			设置状态码(302)	设置头location
+			重定向的方法：sendRedirect("客户端绝对路径"); 写项目名
+			
+		* 页面的定时刷新
+			使用refresh头完成页面的定时刷新		setHeader("refresh","5;url=/day10/xxx");
+			使用HTML的标签<meta>
+			
+		* 禁用浏览器的缓存（设置三个头信息	CEP）
+			
+		* 向页面输出中文乱码的问题
+			* 字节
+				设置浏览器打开文件时的编码
+					response.setHeader("Content-Type","text/html;charset=UTF-8");
+				获取字符串的字节数组
+					"中文".getBytes("UTF-8");
+				
+			* 字符
+				* 设置浏览器打开文件时的编码
+					response.setHeader("Content-Type","text/html;charset=UTF-8");
+				* 设置response缓冲区的编码（默认是ISO-8859-1）
+					response.setCharacterEncoding("UTF-8");
+					
+				* 简写的方式
+					response.setContentType("text/html;charset=UTF-8");
+					
+		* 文件下载
+			* 通过IO流进行读取
+			* 设置头信息	setHeader("Content-Disposition","attachment;filename="+文件名称);	以附件的形式打开
+			
+		* 验证码（用到哪些类）
+			* 在内存中生成图片	BufferedImage	
+			* 获取画笔的对象
+			* 画一些东西
+			* 把图片输出客户端	ImageIO.write(BufferedImage,"jpg",response.getOutputStream());
+			
+			* 需要验证加入图片中	通过img标签的src的属性	
+			
+	* request对象（请求）
+		* 获取客户机的信息
+			request.getRemoteAddr()		获取ip
+			request.getMethod()			获取请求方式
+			request.getContextPath()	获取虚拟路径
+			
+		* 获取请求参数（*****）
+			request.getParameter("表单中name属性的值");
+			request.getParameterValues();	获取复选框的内容
+			
+			request.getParameterMap()		获取键值对的形式
+			
+		* request获取中文乱码的问题
+			* post
+				* 设置request缓冲区的编码
+				request.setCharacterEncoding("UTF-8");
+				
+			* get
+				* 通过String的构造方式
+				username = new String(username.getBytes("ISO-8859-1"),"UTF-8");
+			
+		* request域对象（*****）
+			* ServletContext域对象：代表整个WEB应用。
+			* request域：一次请求范围内。
+			
+		* 重定向和转发区别
+			* 重定向两次请求，两次响应，转发一次。
+			* 重定向地址栏发生了变化，转发地址栏没变
+			* 重定向不能使用request传值，转发就可以。
+			* 重定向可以定向到任何资源。转发只能是系统内部。
+			
+==============================================================================================================
+	* JSP、EL表达式的入门（要用）	
+		* Servlet/JSP	是两种动态的WEB资源的两种技术。
+		* 使用Servlet生成HTML的页面
+			response.getWriter("<form action='' method='post'>");
+			response.getWriter("<input type='text' name='username'>");
+		* JSP简介
+			* java server pages		java服务器端的网页们，是在服务器端执行。
+			* JSP不仅可以写HTML+java代码+JSP自己的代码
+			* JSP的运行原理（*****）：JSP -- 翻译成Servlet -- 编译 -- 访问
+			
+		* JSP的脚本元素（JSP的页面可以编写java代码）
+			
+			<%!  %>		：定义类、定义变量、定义方法（不常用）	成员变量。
+			<%=  %>		：输出语句（输出到页面，不能有分号）	
+			<%   %>		：定义变量、语句
+			
+		* EL快速入门
+			* 获取域对象中的内容		request.setAttribute("xx","yy");
+			${xx}
+			
+			
+	* 两个会话的技术
+		* 会话概念：打开浏览器，可以访问WEB资源，多次访问WEB资源，关闭浏览器，整个过程一次会话。
+		
+		* 购买商品
+			用户点击超链接通过一个servlet购买了一个商品，程序应该保存用户购买的商品，
+			以便于用户点结帐servlet时，结帐servlet可以得到用户商品为用户结帐。
+			
+		* 把商品存入到ServletContext获取request域中呢？
+		* cookie和seesion的原理
+			看图02
+			
+	* cookie
+		* 显示上次的访问时间（案例）
+			* 第一次访问，输出欢迎，在服务器端，记录当前的时间，把当前的时间通过cookie回写到浏览器。
+			* 第二次访问，会带着上次的时间，获取时间，可以把时间显示到页面上，记录当前的时间，再把回写浏览器。
+			输出上次的访问时间。
+			
+		* Cookie的API
+			* cookie的构造方式	Cookie(String name, String value) 
+			* String getName()  获取cookie的名称
+			* String getValue() 获取cookie的值
+			
+			* void setMaxAge(int expiry)  			：设置有效时间
+				* 失效cookie	setMaxAge(0);	前提条件：设置有效路径（和之前设置过相同）
+				
+			* void setPath(String uri)  			：设置有效路径
+				* 默认的有效路径（）
+					* 配置	/last				默认路径	/day11
+					* 配置	/servlet/last		默认路径	/day11/servlet
+			
+			* void setDomain(String pattern)  		：设置有效域名
+				* www.sina.com.cn
+				* sports.sina.com.cn
+				* xxx.sina.com.cn
+				* 设置有效域名	setDomain(".sian.com.cn");
+			
+			* 会话级别的cookie：默认保存到浏览器的内存中。
+			* 持久的cookie：把cookie保存到磁盘上。通过setMaxAge(int a)进行设置。
+			
+			
+		* 显示用户上次访问过的商品信息（需求）
+			 * 	1.获取请求参数
+			 * 	2.获取cookie数组，通过指定的名称（自己指定）查找cookie
+			 * 	3.如果cookie==null，第一次访问
+			 * 		* 如果是第一次访问，创建cookie，回写浏览器
+			 * 	4.如果cookie!=null，不是第一次访问
+			 * 		* 如果不是第一次访问，说明我的cookie中已经存在id
+			 * 			* 判断，当前的id是否已经存在cookie的中value
+			 * 			* 如果存在，不用操作
+			 * 			* 如果不存在，在后面追加（product=1,2）
+			 * 	5.重定向到商品页面
+				
+				
+    * session（服务器） 
+		* cookie基于客户端，不安全，并且大小和个数的限制。
+		* session域对象，范围一次会话范围，存个人相关的数据。
+			* setAttribute(String name, Object value) 
+			* Object getAttribute(String name)  
+			
+			* String getId()  获取seesion的唯一的ID
+			* void invalidate()  销毁的seesion
+			
+			
+		* 完成简单的购物车
+			* 购物车	Map<String,Integer> cart	购物车，把购物车存入seesion中。
+			
+			* 获取数据
+			* 判断是否是第一次访问    session.getAttribute("cart");
+			  * 如果第一次访问，cart	创建一个购物车，放入商品的名称和数量
+
+			  * 如果不是第一次访问，cart!=null
+				判断是否包含该商品？
+				   * 如果包含，数量拿出来，++，放回去，存入seesion中
+					
+				   * 如果不包含，正常放入到购物车中。存入seesion中
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

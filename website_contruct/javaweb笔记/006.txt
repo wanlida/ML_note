@@ -1,0 +1,242 @@
+* 课程回顾：
+	* onsubmit事件：控制表单的提交，表单的校验。
+	* 注意事项：作用在form标签上，onsubmit="return run()"
+	* run()	必须有返回值，返回true或者false。
+	
+	* 通过js提交表单
+		* 获取form对象，提交的submit();	.action=""	.method=""
+		
+	* XML
+		* XML的简介
+			* 可扩展的标记语言。自定义标签。很类似的HTML。
+			* XML传输数据，HTML是显示数据的。
+			* 做框架的配置文件。
+			* 系统与系统传输数据。
+			* XML1.0	XML1.1
+			
+		* XML的语法
+			* 文档声明
+				* <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+				* 出现文档的第一行第一列位置
+				
+			* 定义元素
+				* 区分大小写		<a></A>
+				* 不能以数字和中划线开头
+				* 不能以XML开头
+				* 不能包含空格和冒号
+				
+			* 定义属性
+				* 不能有相同的属性。
+				* 规范同上
+				
+			* 注释
+				* 和HTML的注释一样的
+				
+			* 特殊字符
+				* <		&lt;
+				* >		&gt;
+				* &		&amp;
+				* "		&quot;
+				* '		&apos;
+			
+			* CDATA区
+				* 把中间的内容作为字符串
+				* 写法：
+					<![CDATA[
+						内容
+					]]>
+			
+			* PI（忘了）
+		
+		* XML的约束
+			* DTD（会写）		
+				* DTD的快速入门
+					* 定义元素	<!ELEMENT 元素名称 元素类型>
+					* 判断哪些是复杂的元素，哪些是简单的元素
+						* 如果简单的元素	(#PCDATA)
+						* 如果是复杂元素	(子元素)
+					* 引入到XML的文档中
+						* 可以写在XML的文件上
+							<!DOCTYPE 根节点 [
+								DTD的内容
+							]>
+							
+						* 引入本地的DTD
+							<!DOCTYPE 根节点 SYSTEM "DTD的地址">
+						
+						* 引入网络的DTD
+							<!DOCTYPE 根节点 PUBLIC "DTD的名称" "DTD的地址">
+			
+				
+				* DTD的语法
+					* 定义元素
+						<!ELEMENT 元素名称 元素类型>
+						* 元素类型
+							* (#PCDATA)	字符串
+							* EMPTY		空
+							* ANY		任意的
+							* (子元素)
+							
+						* 子元素
+							* 子元素之间关系
+								* ,		有顺序
+								* |		任选其一
+							* 出现次数
+								* +		1次或多次
+								* *		任意次
+								* ?		0次或1次
+								
+					* 定义属性
+						<!ATTLIST 元素名称 
+							属性名称 属性类型 属性约束 
+							属性名称 属性类型 属性约束
+						>
+						
+						* 属性类型
+							* CDATA		字符串
+							* 枚举		没有关键字(男人|女人)
+							* ID		唯一值
+							
+						* 属性约束
+							* #REQUIRED		必须的
+							* #IMPLIED		可选的
+							* #FIXED		固定值(#FIXED "值")
+							* 默认值
+							
+					* 定义实体
+						* <!ENTITY 别名 "值">
+						* 在XML引入别名		&别名;
+								
+			
+			* schema（看懂）	
+			
+			
+		* XML的编程（解析XML）
+			* 解析XML的技术，DOM和SAX
+			
+			* JAXP是SUN提交，JAVASE的一部分。DOM解析
+			* 开发步骤（先获取解析器）：
+				* 获取解析器的工厂类
+				* 获取解析器类
+				* 解析XML，返回document对象。
+				
+				
+			* 回写
+				* 先获取回写的工厂类
+				* 获取回写类
+				* transform(new DOMSource(document),new StreamResult(path));
+			
+===========================================================================================================================
+	* XML的约束(schema，看懂)
+		* schema约束：
+			* schema和DTD的对比（面试题）：
+				* schema符合XML的语法结构。		
+				* 可以解析schema文档。
+				* schema对名称空间支持的好。				
+				* schem支持更多的数据类型，自定义的数据类型。
+				
+				
+			* 预先定义元素和属性
+			* schema的后缀名是.xsd
+			* 只能有一个根节点，名称是schema。
+			
+		* 开发步骤
+			* 开发schema的约束文档
+				* 引入W3C的名称
+					* 在根节点上，使用属性xmlns(xml namespace)
+					* xmlns="http://www.w3.org/2001/XMLSchema"
+				* 定义元素
+					* <element name="书架"></element>
+				* 判断是否是复杂还是简单的元素
+					* 如果是简单	在element有属性	type="数据的类型"	
+					* 如果是复杂	
+						* 声明标签是复杂的元素	<complexType>
+						* 子元素之间的关系	<sequence>
+				* 起名：targetNamespace	目标名称空间（起名）
+					* 值是任意的：http://www.itcast.cn/1110
+					
+				* elementFormDefault	： 
+					* qualified（使用）	：质量好的
+					* unqualified		：质量不好的
+					
+			* 在XML文档中引入自己编写的schema文档
+				* 引入W3C名称空间，我是实例文档。
+					* xmlns="http://www.w3.org/2001/XMLSchema-instance"
+				* 引入自己编写的schema的文档
+					* xmlns="http://www.itcast.cn/1110"
+				* 问题：元素上不能有相同的属性名称
+					* 解决：起别名		:aa
+					* 技巧：在下面出现标签的概率小起别名
+				* 引入自己编写的schema文档的地址
+					* schemaLocation属性是W3C提供的，如果W3C名称空间要是有别名的话，先把别名写上。
+						xsi:schemaLocation="名称空间   schema文件的地址"
+				
+				
+		* 名称空间的概念
+			* 编写完schema文档，起唯一的名称空间。
+			* 在编写XML文档，通过xmlns来引入名称空间。
+				
+	* XML的编程
+		* JAXP的SAX解析（了解的怎么样解析）
+			* 只能做查询，不能做增删改。
+			* SAX解析
+				* 解析器
+					* 获取解析器的工厂
+					* 获取解析器对象
+					* 解析XML(XML的文件的地址，事件处理器)
+					
+				* 事件处理器
+					* 自己编写的类，需要继承DefalutHandler类，重写三个方法。
+					* startElement()
+					* characters()
+					* endElement()
+					
+					
+			* SAX的解析原理：		
+				解析器采用SAX方式在解析某个XML文档时，它只要解析到XML文档的一个组成部分，		（边读边解析）
+				都会去调用事件处理器的一个方法，解析器在调用事件处理器的方法时，
+				会把当前解析到的xml文件内容作为方法的参数传递给事件处理器。
+				
+				事件处理器由程序员编写，程序员通过事件处理器中方法的参数，
+				就可以很轻松地得到sax解析器解析到的数据，从而可以决定如何对数据进行处理。
+		
+
+		* DOM4J的解析（必须会，企业中用的多）
+			* 先下载DOM4J相应的jar包。导入工程中，才能使用。
+			* 把dom4j-1.6.1.jar导入到工程中。
+			* WEB项目：复制dom4j-1.6.1.jar到	WebRoot -- WEB-INF -- lib里面。就ok。
+			
+			
+			
+		* DOM4J对XPATH的支持
+			* 导入包。jaxen-1.1-beta-6.jar。
+			* 怎么使用？
+				selectNodes("/AAA")			返回集合
+				selectSingleNode()		一个Node对象
+				
+			* 参数就是xpath的语法
+				* /AAA/BBB			获取BBB的节点
+				* //BBB				无论层级关系，找到BBB的节点
+				* *					代表是所有
+				* /AAA/BBB[1]		找到BBB的第一个		/AAA/BBB[last()]	最后一个
+				* @					属性
+				* 
+			
+			
+	* 扩展		
+		* 通过XML管理学生的信息
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+	
