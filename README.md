@@ -31,7 +31,11 @@ https://github.com/Featuretools/predict-next-purchase
 
 ## 教程
 1. automated-feature-engineering  
-https://github.com/WillKoehrsen/automated-feature-engineering
+https://github.com/WillKoehrsen/automated-feature-engineering  
 2.https://github.com/apachecn/kaggle  
 3.MachineLearning常见算法的代码实现和学习  
-https://github.com/csuldw/MachineLearning
+https://github.com/csuldw/MachineLearning  
+4.tensorflow-DeepFM  
+https://github.com/ChenglongChen/tensorflow-DeepFM  
+5.learn python  
+https://github.com/xianhu/LearnPython
