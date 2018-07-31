@@ -6,9 +6,13 @@ https://elitedatascience.com/python-machine-learning-tutorial-scikit-learn?spm=a
 
 3.apachenCN    https://github.com/apachecn/organization
 
-4.feature-engineering-book       https://github.com/alicezheng/feature-engineering-book
-## 比赛代码收集
-1. 某大佬，天池大数据竞赛的代码  
+4.feature-engineering-book        https://github.com/alicezheng/feature-engineering-book  
+# 队伍大佬的github  
+https://github.com/jlinbb/2018_diantou_PhotovoltaicPowerStation/blob/master/McDonald/McDonald_v2.ipynb  
+https://github.com/Troysps/2018_diantou_PhotovoltaicPowerStation/blob 
+
+# 比赛代码
+1.某大佬，天池大数据竞赛的代码  
 https://github.com/PnYuan/Tianchi-BigData  
 2. Tencent2018_Lookalike_Rank7th  
 https://github.com/guoday/Tencent2018_Lookalike_Rank7th  
