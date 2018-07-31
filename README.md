@@ -10,7 +10,7 @@ https://elitedatascience.com/python-machine-learning-tutorial-scikit-learn?spm=a
 # 队伍大佬的github  
 https://github.com/jlinbb/2018_diantou_PhotovoltaicPowerStation/blob/master/McDonald/McDonald_v2.ipynb  
 https://github.com/Troysps/2018_diantou_PhotovoltaicPowerStation/blob 
-
+https://github.com/Troysps/2018_diantou_PhotovoltaicPowerStation/blob/Smilexuhc  
 # 比赛代码
 1.某大佬，天池大数据竞赛的代码  
 https://github.com/PnYuan/Tianchi-BigData  
