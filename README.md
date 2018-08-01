@@ -51,4 +51,31 @@ https://github.com/xianhu/LearnPython
 6.Sklearn 与 TensorFlow 机器学习实用指南  
 https://github.com/apachecn/hands_on_Ml_with_Sklearn_and_TF  
 7.featuretools  
-https://github.com/Featuretools/featuretools
+https://github.com/Featuretools/featuretools  
+## 比赛
+数据挖掘大赛## 数据竞赛入口
+```
+* [Kaggle](https://www.kaggle.com/)
+* [阿里天池](https://tianchi.aliyun.com/competition/gameList.htm)
+* [DataFountain](http://www.datafountain.cn/#/)
+* [赛氪](https://www.saikr.com/vs/computer/0/0)
+* [DC](http://www.dcjingsai.com/)
+* [百恩](https://www.biendata.com/)
+* [京东数据](http://jddjr.jd.com/)
+* [滴滴算法](http://research.xiaojukeji.com/)
+* [CCF大数据与计算智能比赛](http://dev.wid.org.cn/data/science/player/competition/list)
+* [中国中文信息学会-机器阅读比赛 ](http://mrc2018.cipsc.org.cn/)
+* [腾讯广告算法大赛](http://algo.qq.com/)
+* [soda](http://soda.datashanghai.gov.cn/)
+* [soda-shanghai](http://shanghai.sodachallenges.com/)
+* [数据嗨客](http://hackdata.cn/)
+* ccf机器学习比赛
+* xlab大数据比赛
+* [大数据研究中心](http://www.bigdata-research.org/)
+* [datacastle](http://www.pkbigdata.com/)
+* [kdd-cup](http://www.kdd.org/kdd-cup)
+* [高校云应用](https://cloud.seu.edu.cn/contest/index)
+* HUAWEI软件精英挑战赛
+* [科赛](https://www.kesci.com/apps/home/competition)
+* * [泰迪杯](http://www.tipdm.org/)
+```
