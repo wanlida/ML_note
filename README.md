@@ -1,3 +1,6 @@
+# github 常用操作  
+http://www.runoob.com/w3cnote/git-guide.html
+
 # machine learning入门项目收集
 
 1.数据清洗项目       https://github.com/ksyooh/twitter-data-wrangle  
