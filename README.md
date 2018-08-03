@@ -36,7 +36,17 @@ https://github.com/wanlida/ML-examples
 3. predict-next-purchase  
 https://github.com/Featuretools/predict-next-purchase  
 4.Feature_Engineering_and_XGBoost_Parameter_Tuning  
-https://github.com/HanXiaoyang/Feature_Engineering_and_XGBoost_Parameter_Tuning
+https://github.com/HanXiaoyang/Feature_Engineering_and_XGBoost_Parameter_Tuning  
+## JAVA JVAWEB教程
+https://github.com/shekhargulati/java8-the-missing-tutorial  
+https://github.com/winterbe/java8-tutorial    
+https://github.com/subaochen/java-tutorial  
+https://github.com/ityouknow/spring-boot-examples  
+https://github.com/roncoo/spring-boot-demo  
+https://github.com/byhieg/JavaTutorial  
+https://github.com/aofeng/JavaTutorial  
+https://github.com/Hackergeek/JavaWebBase  
+https://github.com/in28minutes/JavaWebApplicationStepByStep
 
 ## 教程
 1. automated-feature-engineering  
