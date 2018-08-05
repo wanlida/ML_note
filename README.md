@@ -92,3 +92,5 @@ https://github.com/Featuretools/featuretools
 * [科赛](https://www.kesci.com/apps/home/competition)
 * * [泰迪杯](http://www.tipdm.org/)
 ```
+## 自己搭建vpn梯子
+https://juejin.im/post/5b665a51f265da0f7d4f1ab3
