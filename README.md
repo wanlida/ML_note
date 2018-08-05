@@ -5,8 +5,11 @@ https://github.com/wanlida/ML_note/blob/master/github/github_use_code.md
 ## git - 简明指南 中文
 https://rogerdudler.github.io/git-guide/index.zh.html
 ##   catboost python 教程
-https://github.com/catboost/catboost/tree/master/catboost/tutorials
-＃机器学习#入门项目收集
+https://github.com/catboost/catboost/tree/master/catboost/tutorials  
+## catboost 文档  
+https://tech.yandex.com/catboost/doc/dg/concepts/about-docpage/  
+# 机器学习
+# 入门项目收集  
 
 1.数据清洗项目       https://github.com/ksyooh/twitter-data-wrangle  
 2.葡萄酒项目  
