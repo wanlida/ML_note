@@ -1,6 +1,8 @@
 # github 常用操作  
 http://www.runoob.com/w3cnote/git-guide.html  
-https://github.com/wanlida/ML_note/blob/master/github/github_use_code.md
+https://github.com/wanlida/ML_note/blob/master/github/github_use_code.md    
+## git - 简明指南 中文
+https://rogerdudler.github.io/git-guide/index.zh.html
 
 # machine learning入门项目收集
 
