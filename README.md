@@ -7,7 +7,9 @@ https://rogerdudler.github.io/git-guide/index.zh.html
 ##   catboost python 教程
 https://github.com/catboost/catboost/tree/master/catboost/tutorials  
 ## catboost 文档  
-https://tech.yandex.com/catboost/doc/dg/concepts/about-docpage/  
+https://tech.yandex.com/catboost/doc/dg/concepts/about-docpage/    
+##  catboost pyhton tutorial 
+https://github.com/catboost/tutorials/blob/master/catboost_python_tutorial.ipynb
 # 机器学习
 # 入门项目收集  
 
