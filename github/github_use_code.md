@@ -12,7 +12,7 @@ $ git add . //添加远程不存在的git文件
 
 $ git commit  -m "what I want told to someone" //提交修改
 
-$ git push  //更新到远程服务器上
+$ git push origin master //更新到远程服务器上
 
 $ git rm //移除文件
 ```
