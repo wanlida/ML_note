@@ -53,9 +53,10 @@ https://github.com/Hackergeek/JavaWebBase
 https://github.com/in28minutes/JavaWebApplicationStepByStep
 
 ## 教程
-1. automated-feature-engineering  
+1.automated-feature-engineering  
 https://github.com/WillKoehrsen/automated-feature-engineering  
-2.https://github.com/apachecn/kaggle  
+2. apachecn
+https://github.com/apachecn/kaggle  
 3.MachineLearning常见算法的代码实现和学习  
 https://github.com/csuldw/MachineLearning  
 4.tensorflow-DeepFM  
