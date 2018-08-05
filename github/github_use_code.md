@@ -1,5 +1,7 @@
-## 常用的五个github代码
+## 常用的github代码
 ```
+$  git pull origin master  
+
 $ git clone  //本地如果无远程代码，先做这步，不然就忽略
 
 $ cd //定位到你blog的目录下
