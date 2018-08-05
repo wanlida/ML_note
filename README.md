@@ -83,15 +83,15 @@ https://github.com/Featuretools/featuretools
 * [soda](http://soda.datashanghai.gov.cn/)
 * [soda-shanghai](http://shanghai.sodachallenges.com/)
 * [数据嗨客](http://hackdata.cn/)
-* ccf机器学习比赛
+* [ccf机器学习比赛](https://www.datafountain.cn/)
 * xlab大数据比赛
 * [大数据研究中心](http://www.bigdata-research.org/)
 * [datacastle](http://www.pkbigdata.com/)
 * [kdd-cup](http://www.kdd.org/kdd-cup)
 * [高校云应用](https://cloud.seu.edu.cn/contest/index)
-* HUAWEI软件精英挑战赛
+* [HUAWEI软件精英挑战赛](http://codecraft.devcloud.huaweicloud.com/)
 * [科赛](https://www.kesci.com/apps/home/competition)
 * [泰迪杯](http://www.tipdm.org/)
 
 ## 自己搭建vpn梯子
-https://juejin.im/post/5b665a51f265da0f7d4f1ab3
+[vpn梯子教程](https://juejin.im/post/5b665a51f265da0f7d4f1ab3)
