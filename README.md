@@ -54,8 +54,8 @@ https://github.com/in28minutes/JavaWebApplicationStepByStep
 
 ## 教程
 1. automated-feature-engineering  
-https://github.com/WillKoehrsen/automated-feature-engineering  
-2.https://github.com/apachecn/kaggle  
+https://github.com/WillKoehrsen/automated-feature-engineering    
+2.https://github.com/apachecn/kaggle    
 3.MachineLearning常见算法的代码实现和学习  
 https://github.com/csuldw/MachineLearning  
 4.tensorflow-DeepFM  
@@ -68,7 +68,7 @@ https://github.com/apachecn/hands_on_Ml_with_Sklearn_and_TF
 https://github.com/Featuretools/featuretools  
 ## 比赛
 数据挖掘大赛## 数据竞赛入口
-```
+
 * [Kaggle](https://www.kaggle.com/)
 * [阿里天池](https://tianchi.aliyun.com/competition/gameList.htm)
 * [DataFountain](http://www.datafountain.cn/#/)
@@ -91,7 +91,7 @@ https://github.com/Featuretools/featuretools
 * [高校云应用](https://cloud.seu.edu.cn/contest/index)
 * HUAWEI软件精英挑战赛
 * [科赛](https://www.kesci.com/apps/home/competition)
-* * [泰迪杯](http://www.tipdm.org/)
-```
+* [泰迪杯](http://www.tipdm.org/)
+
 ## 自己搭建vpn梯子
 https://juejin.im/post/5b665a51f265da0f7d4f1ab3
