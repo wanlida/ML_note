@@ -12,6 +12,8 @@ https://tech.yandex.com/catboost/doc/dg/concepts/about-docpage/
 https://github.com/catboost/tutorials/blob/master/catboost_python_tutorial.ipynb  
 ## kearas 中文文档  
 http://keras-cn.readthedocs.io/en/latest/
+## 博客  
+https://www.cnblogs.com/jasonfreak/
 # 机器学习
 # 入门项目收集  
 
