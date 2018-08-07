@@ -1,4 +1,5 @@
-## NG的课程  
+## CS230深度学习    
+Andrew Ng
 
 ### 课程1
 ### Neural Networks and Deep Learning 
