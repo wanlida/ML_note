@@ -1,3 +1,5 @@
+## 一个比较不错的博客，里面有资源集合
+https://antkillerfarm.github.io/
 # github 常用操作  
 http://www.runoob.com/w3cnote/git-guide.html  
 https://github.com/wanlida/ML_note/blob/master/github/github_use_code.md      
