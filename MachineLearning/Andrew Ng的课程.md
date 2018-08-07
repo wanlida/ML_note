@@ -4,7 +4,7 @@
 ### Neural Networks and Deep Learning 
 https://www.coursera.org/learn/neural-networks-deep-learning
 ### 课程2
-### Improving Deep Neural Networks: Hyperparameter tuning, Regularization and Optimization 
+### Improving Deep Neural Networks
 https://www.coursera.org/learn/deep-neural-network
 ### 课程3
 ### Structuring Machine Learning Projects
