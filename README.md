@@ -10,6 +10,8 @@ https://rogerdudler.github.io/git-guide/index.zh.html
 https://github.com/catboost/catboost/tree/master/catboost/tutorials  
 ## catboost 文档  
 https://tech.yandex.com/catboost/doc/dg/concepts/about-docpage/    
+## catboost 调参实战  
+https://blog.csdn.net/linxid/article/details/80723811
 ##  catboost pyhton tutorial 
 https://github.com/catboost/tutorials/blob/master/catboost_python_tutorial.ipynb  
 ## kearas 中文文档  
