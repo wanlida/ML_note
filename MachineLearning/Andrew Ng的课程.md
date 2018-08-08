@@ -17,6 +17,8 @@ https://www.coursera.org/learn/convolutional-neural-networks
 ### Sequence Models
 https://www.coursera.org/learn/nlp-sequence-models
 
+## 机器学习  
+https://www.coursera.org/learn/machine-learning
 ----
 ## machine-learning-yearning-cn book of Andrew Ng
 https://accepteddoge.github.io/machine-learning-yearning-cn/
