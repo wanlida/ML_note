@@ -118,7 +118,9 @@ rf1= RandomForestClassifier(n_estimators= 60, max_depth=13, min_samples_split=11
 rf1.fit(X,y)
 printrf1.oob_score_
 #输出结果为：0.984
-#可见此时我们的袋外分数有一定的提高。也就是时候模型的泛化能力增强了。对于内部节点再划分所需最小样本数min_samples_split，我们暂时不能一起定下来，因为这个还和决策树其他的参数存在关联。下面我们再对内部节点再划分所需最小样本数min_samples_split和叶子节点最少样本数min_samples_leaf一起调参。
+#可见此时我们的袋外分数有一定的提高。也就是时候模型的泛化能力增强了。对于内部节点再划分所需最小样本数min_samples_split，
+#我们暂时不能一起定下来，因为这个还和决策树其他的参数存在关联。下面我们再对内部节点再划分所需最小样本数min_samples_split
+#和叶子节点最少样本数min_samples_leaf一起调参。
  
 #再对内部节点再划分所需最小样本数min_samples_split和叶子节点最少样本数min_samples_leaf一起调参
 param_test3= {'min_samples_split':range(80,150,20), 'min_samples_leaf':range(10,60,10)}
