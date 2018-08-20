@@ -110,3 +110,15 @@ https://github.com/Featuretools/featuretools
 
 ## 自己搭建vpn梯子
 [vpn梯子教程](https://juejin.im/post/5b665a51f265da0f7d4f1ab3)
+## free mooc  
+https://alison.com/  
+https://mooec.com/courses/elementary-english-course  
+https://www.futurelearn.com/  
+https://www.fluentu.com/blog/english/go/edx/edx-free-online-courses/  
+https://www.udemy.com/  
+https://www.openlearning.com/  
+https://www.canvas.net/  
+https://www.coursera.org/  
+http://www.theweu.com/  
+http://www.saylor.org/
+
