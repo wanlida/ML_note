@@ -109,7 +109,9 @@ https://github.com/Featuretools/featuretools
 * [泰迪杯](http://www.tipdm.org/)
 
 ## 自己搭建vpn梯子
-[vpn梯子教程](https://juejin.im/post/5b665a51f265da0f7d4f1ab3)
+[vpn梯子教程](https://juejin.im/post/5b665a51f265da0f7d4f1ab3)   
+## 下载赛风3的网站  
+https://s3.amazonaws.com/psiphon/web/60l3-nnss-6gsn/zh/download.html#direct
 ## free mooc  
 https://alison.com/  
 https://mooec.com/courses/elementary-english-course  
