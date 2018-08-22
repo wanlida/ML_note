@@ -123,4 +123,5 @@ https://www.canvas.net/
 https://www.coursera.org/  
 http://www.theweu.com/  
 http://www.saylor.org/
-
+## 破解版百度下载器  
+http://pandownload.com/
