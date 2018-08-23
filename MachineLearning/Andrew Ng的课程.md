@@ -7,7 +7,7 @@ Andrew Ng
 ### 课程4 [Convolutional Neural Networks](https://www.coursera.org/learn/convolutional-neural-networks)
 ### 课程5 [Sequence Models](https://www.coursera.org/learn/nlp-sequence-models)
 These are 3 weeks of classes resource from youtube  
-[Sequence Models week1] (https://www.youtube.com/watch?v=yEfsDHymL0w&list=PLZnyIsit9AM7yeTZuBmezKNc6hFHUPImh)  
+[Sequence Models week1](https://www.youtube.com/watch?v=yEfsDHymL0w&list=PLZnyIsit9AM7yeTZuBmezKNc6hFHUPImh)  
 Sequence Models week2 ：https://www.youtube.com/watch?v=YgpI2aROLlo&list=PLZnyIsit9AM7HBPn6m06ddzw_N9zGk--2  
 Sequence Models week3 ：https://www.youtube.com/watch?v=186rxP6qfJA&list=PLZnyIsit9AM7VI4ylALdbeS93i-nonUzZ  
 ## 机器学习  
