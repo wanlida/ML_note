@@ -96,6 +96,10 @@ https://www.coursera.org/
 http://www.theweu.com/  
 http://www.saylor.org/  
 ### [破解版百度下载器](http://pandownload.com/)  
-
+## 特征工程的常见方法  
+[特征工程特征工程中常见的方法](https://vinta.ws/code/feature-engineering.html)  
+[【持续更新】机器学习特征工程实用技巧大全](https://zhuanlan.zhihu.com/p/26444240)  
+[Feature Engineering - Getting most out of data for predictive models - TDC 2017](https://www.slideshare.net/gabrielspmoreira/feature-engineering-getting-most-out-of-data-for-predictive-models-tdc-2017)  
+[Feature Engineering](https://www.slideshare.net/HJvanVeen/feature-engineering-72376750)
 ## 比赛经验  
 [回顾一年的KAGGLE比赛 2014](https://mlwave.com/reflecting-back-on-one-year-of-kaggle-contests/)
