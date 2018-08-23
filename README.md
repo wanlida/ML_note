@@ -21,16 +21,15 @@ https://www.cnblogs.com/jasonfreak/
 4.[feature-engineering-book](https://github.com/alicezheng/feature-engineering-book)    
 5.[O2O-Coupon-Usage-Forecast 第一名](https://github.com/wepe/O2O-Coupon-Usage-Forecast)[赛题链接](https://tianchi.aliyun.com/notebook/detail.html?spm=5176.11409386.4851167.7.65c91d07FiVHVN&id=4796)  
 6.[Home Credit Default Risk Competition 非常详细的入门教程notebook](https://www.kaggle.com/willkoehrsen/start-here-a-gentle-introduction)  7.[2018-KDD-Cup-Top1-Solutions](https://github.com/luoda888/2018-KDD-Cup-Top1-Solutions)  
+8.[某大佬，天池大数据竞赛的代码](https://github.com/PnYuan/Tianchi-BigData)    
+9.[Tencent2018_Lookalike_Rank7th](https://github.com/guoday/Tencent2018_Lookalike_Rank7th)   
+10.[Tencent2018_Lookalike](https://github.com/wanlida/2018-Tencent-social-advertising-algorithm-contest)  
+11.[kaggle competition](https://github.com/SudalaiRajkumar/Kaggle)   
+12.[JDATA第七名代码](https://github.com/duxuhao/JData-2018)
 ## 队伍成员，以及大佬的的的github  
-[@jlinbb](https://github.com/jlinbb)
-[@Troysps](https://github.com/Troysps)
+[@jlinbb](https://github.com/jlinbb)  
+[@Troysps](https://github.com/Troysps)  
 [@植物大佬](https://github.com/plantsgo)多项数据比赛前十
-# 比赛代码
-1.[某大佬，天池大数据竞赛的代码](https://github.com/PnYuan/Tianchi-BigData)    
-2.[Tencent2018_Lookalike_Rank7th](https://github.com/guoday/Tencent2018_Lookalike_Rank7th)   
-3.[Tencent2018_Lookalike](https://github.com/wanlida/2018-Tencent-social-advertising-algorithm-contest)  
-4.[kaggle competition](https://github.com/SudalaiRajkumar/Kaggle)   
-5.[JDATA第七名代码](https://github.com/duxuhao/JData-2018)
 # 代码案例
 1.[Feature-engineering](https://github.com/HanXiaoyang/Feature-engineering )  
 2.[ML-examples](https://github.com/wanlida/ML-examples)  
@@ -54,8 +53,10 @@ https://github.com/in28minutes/JavaWebApplicationStepByStep
 4.[tensorflow-DeepFM](https://github.com/ChenglongChen/tensorflow-DeepFM )  
 5.[learn python](https://github.com/xianhu/LearnPython)    
 6.[Sklearn 与 TensorFlow 机器学习实用指南](https://github.com/apachecn/hands_on_Ml_with_Sklearn_and_TF)  
-7.[featuretools](https://github.com/Featuretools/featuretools )  
-## [数据竞赛入口 最全入口](https://github.com/iphysresearch/DataSciComp)
+7.[featuretools](https://github.com/Featuretools/featuretools)  
+
+----
+### [数据竞赛入口 最全入口](https://github.com/iphysresearch/DataSciComp)
 * [Kaggle](https://www.kaggle.com/)
 * [阿里天池](https://tianchi.aliyun.com/competition/gameList.htm)
 * [DataFountain](http://www.datafountain.cn/#/)
@@ -79,9 +80,9 @@ https://github.com/in28minutes/JavaWebApplicationStepByStep
 * [HUAWEI软件精英挑战赛](http://codecraft.devcloud.huaweicloud.com/)
 * [科赛](https://www.kesci.com/apps/home/competition)
 * [泰迪杯](http://www.tipdm.org/)
-
-## 自己搭建vpn梯子 [vpn梯子教程](https://juejin.im/post/5b665a51f265da0f7d4f1ab3)   
-## [下载赛风3的网站](https://s3.amazonaws.com/psiphon/web/60l3-nnss-6gsn/zh/download.html#direct)  
+----
+### 自己搭建vpn梯子 [vpn梯子教程](https://juejin.im/post/5b665a51f265da0f7d4f1ab3)   
+### [下载赛风3的网站](https://s3.amazonaws.com/psiphon/web/60l3-nnss-6gsn/zh/download.html#direct)  
 
 ## free mooc  10个
 https://alison.com/  
@@ -94,5 +95,5 @@ https://www.canvas.net/
 https://www.coursera.org/  
 http://www.theweu.com/  
 http://www.saylor.org/  
-## [破解版百度下载器](http://pandownload.com/)  
+### [破解版百度下载器](http://pandownload.com/)  
 
