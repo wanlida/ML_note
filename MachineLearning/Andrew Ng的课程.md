@@ -14,9 +14,11 @@ https://www.coursera.org/learn/machine-learning-projects
 ### Convolutional Neural Networks
 https://www.coursera.org/learn/convolutional-neural-networks
 ### 课程5
-### Sequence Models
-https://www.coursera.org/learn/nlp-sequence-models
-
+### Sequence Models https://www.coursera.org/learn/nlp-sequence-models  
+These are 3 weeks of classes resource from youtube  
+Sequence Models week1 ：https://www.youtube.com/watch?v=yEfsDHymL0w&list=PLZnyIsit9AM7yeTZuBmezKNc6hFHUPImh  
+Sequence Models week2 ：https://www.youtube.com/watch?v=YgpI2aROLlo&list=PLZnyIsit9AM7HBPn6m06ddzw_N9zGk--2  
+Sequence Models week3 ：https://www.youtube.com/watch?v=186rxP6qfJA&list=PLZnyIsit9AM7VI4ylALdbeS93i-nonUzZ  
 ## 机器学习  
 https://www.coursera.org/learn/machine-learning
 ----
@@ -25,9 +27,8 @@ https://accepteddoge.github.io/machine-learning-yearning-cn/
 
 基本上完成上述课程就算是入门了。接下来可以根据自己的兴趣和方向，有的放矢。例如主攻 CV 方向，可以继续学习
 
-## 斯坦福 CS231n 课程：
-
-http://cs231n.stanford.edu/
+## 斯坦福 CS231n 课程：http://cs231n.stanford.edu/  
+## 2017年春季用于识别计算机视觉的神经网络 来源：YouTube https://www.youtube.com/playlist?list=PL3FW7Lu3i5JvHM8ljYj-zLfQRF3EO8sYv
 
 如果主攻 NLP 方向可以学习
 
