@@ -97,3 +97,5 @@ http://www.theweu.com/
 http://www.saylor.org/  
 ### [破解版百度下载器](http://pandownload.com/)  
 
+## 比赛经验  
+[回顾一年的KAGGLE比赛 2014](https://mlwave.com/reflecting-back-on-one-year-of-kaggle-contests/)
