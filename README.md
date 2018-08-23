@@ -29,7 +29,7 @@ https://www.cnblogs.com/jasonfreak/
 ## 队伍成员，以及大佬的的的github  
 [@jlinbb](https://github.com/jlinbb)  
 [@Troysps](https://github.com/Troysps)  
-[@植物大佬](https://github.com/plantsgo)多项数据比赛前十
+[@植物大佬](https://github.com/plantsgo)  国内多次 data competition 前十
 # 代码案例
 1.[Feature-engineering](https://github.com/HanXiaoyang/Feature-engineering )  
 2.[ML-examples](https://github.com/wanlida/ML-examples)  
