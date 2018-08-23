@@ -1,12 +1,14 @@
+# 机器学习
 ## [机器学习 author:Andrew Ng  课程链接](https://www.coursera.org/learn/machine-learning)
 ------
+# 深度学习  
 ## CS230深度学习    author:Andrew Ng
 ### 课程1 [Neural Networks and Deep Learning 链接](https://www.coursera.org/learn/neural-networks-deep-learning)
 ### 课程2 [Improving Deep Neural Networks 链接](https://www.coursera.org/learn/deep-neural-network)
 ### 课程3 [Structuring Machine Learning Projects 链接](https://www.coursera.org/learn/machine-learning-projects)
 ### 课程4 [Convolutional Neural Networks 链接](https://www.coursera.org/learn/convolutional-neural-networks)
 ### 课程5 [Sequence Models 链接](https://www.coursera.org/learn/nlp-sequence-models)
-## These are 3 weeks of classes resource from youtube:  
+### These are 3 weeks of classes resource from youtube:  
 [Sequence Models week1 链接](https://www.youtube.com/watch?v=yEfsDHymL0w&list=PLZnyIsit9AM7yeTZuBmezKNc6hFHUPImh)  
 [Sequence Models week2 链接](https://www.youtube.com/watch?v=YgpI2aROLlo&list=PLZnyIsit9AM7HBPn6m06ddzw_N9zGk--2)  
 [Sequence Models week3 链接](https://www.youtube.com/watch?v=186rxP6qfJA&list=PLZnyIsit9AM7VI4ylALdbeS93i-nonUzZ)  
