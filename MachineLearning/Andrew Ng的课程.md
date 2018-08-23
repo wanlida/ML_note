@@ -14,9 +14,9 @@
 [Sequence Models week3 链接](https://www.youtube.com/watch?v=186rxP6qfJA&list=PLZnyIsit9AM7VI4ylALdbeS93i-nonUzZ)  
 
 --------
-## [斯坦福 CS231n 课程 链接](http://cs231n.stanford.edu/)
+## [斯坦福 CS231n 课程 Convolutional Neural Networks for Visual Recognition 链接](http://cs231n.stanford.edu/)
 ---
-## [用于识别计算机视觉的神经网络 2017年春 链接](https://www.youtube.com/playlist?list=PL3FW7Lu3i5JvHM8ljYj-zLfQRF3EO8sYv)
+## [用于识别计算机视觉的神经网络 CS231n 2017年春 旧视频 链接](https://www.youtube.com/playlist?list=PL3FW7Lu3i5JvHM8ljYj-zLfQRF3EO8sYv)
 ----
 # NLP方向
 ## [斯坦福 CS224n 课程   用于识别计算机视觉的神经网络 链接](http://web.stanford.edu/class/cs224n/)
