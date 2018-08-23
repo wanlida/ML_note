@@ -31,7 +31,7 @@ http://cs231n.stanford.edu/
 
 如果主攻 NLP 方向可以学习
 
-##斯坦福 CS224n 课程：
+## 斯坦福 CS224n 课程：
 
 http://web.stanford.edu/class/cs224n/
 
