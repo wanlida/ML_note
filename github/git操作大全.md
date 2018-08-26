@@ -20,6 +20,8 @@ git rm <file> # 从版本库中删除文件
 
 git rm <file> --cached # 从版本库中删除文件，但不删除文件
 
+git rm -r <文件夹> # 删除文件夹以及其里面的内容
+
 git reset <file> # 从暂存区恢复到工作文件
 
 git reset -- . # 从暂存区恢复到工作文件
