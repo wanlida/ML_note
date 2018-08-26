@@ -103,3 +103,6 @@ http://www.saylor.org/
 [Feature Engineering](https://www.slideshare.net/HJvanVeen/feature-engineering-72376750)
 ## 比赛经验  
 [回顾一年的KAGGLE比赛 2014](https://mlwave.com/reflecting-back-on-one-year-of-kaggle-contests/)
+
+## 一个超棒的翻译器：pdf-->word 英文转中文  
+[翻译器链接](https://www.onlinedoctranslator.com/translationprocess)
