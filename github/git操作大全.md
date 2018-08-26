@@ -96,23 +96,23 @@ git br -D <branch> # 强制删除某个分支 (未被合并的分支被删除的
 ```
 
 ### 分支合并和rebase
-
+```
 git merge <branch> # 将branch分支合并到当前分支
 
 git merge origin/master --no-ff # 不要Fast-Foward合并，这样可以生成merge提交
 
 git rebase master <branch> # 将master rebase到branch，相当于： git co <branch> && git rebase master && git co master && git merge <branch>
-
+```
 ### Git补丁管理(方便在多台机器上开发同步时用)
-
+```
 git diff > ../sync.patch # 生成补丁
 
 git apply ../sync.patch # 打补丁
 
 git apply --check ../sync.patch #测试补丁能否成功
-
+```
 ### Git暂存管理
-
+```
 git stash # 暂存
 
 git stash list # 列所有stash
@@ -120,9 +120,9 @@ git stash list # 列所有stash
 git stash apply # 恢复暂存的内容
 
 git stash drop # 删除暂存区
-
+```
 ### Git远程分支管理
-
+```
 git pull # 抓取远程仓库所有分支更新并合并到本地
 
 git pull --no-ff # 抓取远程仓库所有分支更新并合并到本地，不要快进合并
@@ -146,9 +146,9 @@ git push origin <local_branch> # 创建远程分支， origin是远程仓库名
 git push origin <local_branch>:<remote_branch> # 创建远程分支
 
 git push origin :<remote_branch> #先删除本地分支(git br -d <branch>)，然后再push删除远程分支
-
+```
 ### Git远程仓库管理
-
+```
 GitHub
 
 git remote -v # 查看远程服务器地址和仓库名称
@@ -158,9 +158,9 @@ git remote show origin # 查看远程服务器仓库状态
 git remote add origin git@ github:robbin/robbin_site.git # 添加远程仓库地址
 
 git remote set-url origin git@ github.com:robbin/robbin_site.git # 设置远程仓库地址(用于修改远程仓库地址) git remote rm <repository> # 删除远程仓库
-
+```
 ### 创建远程仓库
-
+```
 git clone --bare robbin_site robbin_site.git # 用带版本的项目创建纯版本仓库
 
 scp -r my_project.git git@ git.csdn.net:~ # 将纯仓库上传到服务器上
@@ -174,9 +174,10 @@ git push -u origin master # 客户端首次提交
 git push -u origin develop # 首次将本地develop分支提交到远程develop分支，并且track
 
 git remote set-head origin master # 设置远程仓库的HEAD指向master分支
-
+```
 ### 也可以命令设置跟踪远程库和本地库
-
+```
 git branch --set-upstream master origin/master
 
 git branch --set-upstream develop origin/develop
+```
