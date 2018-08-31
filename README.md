@@ -15,7 +15,7 @@ https://www.cnblogs.com/jasonfreak/
 ## 比赛经验  
 https://blog.csdn.net/shine19930820/article/details/53995369
 # 机器学习
-## 入门项目收集  
+## 入门项目收集 比赛项目收集 
 1.[数据清洗项目](https://github.com/ksyooh/twitter-data-wrangle )        
 2.[葡萄酒项目](https://elitedatascience.com/python-machine-learning-tutorial-scikit-learn?spm=a2c4e.11153940.blogcont221708.10.4c20762310eyBO)  
 3.[apachenCN](https://github.com/apachecn/organization)    
@@ -27,7 +27,8 @@ https://blog.csdn.net/shine19930820/article/details/53995369
 9.[Tencent2018_Lookalike_Rank7th](https://github.com/guoday/Tencent2018_Lookalike_Rank7th)   
 10.[Tencent2018_Lookalike](https://github.com/wanlida/2018-Tencent-social-advertising-algorithm-contest)  
 11.[kaggle competition](https://github.com/SudalaiRajkumar/Kaggle)   
-12.[JDATA第七名代码](https://github.com/duxuhao/JData-2018)
+12.[JDATA第七名代码](https://github.com/duxuhao/JData-2018)  
+13.[国家电投叶片开裂故障预警](https://github.com/whoami-zy/fault-forecast)
 ## 队伍成员，以及大佬的的的github  
 [@jlinbb](https://github.com/jlinbb)  
 [@Troysps](https://github.com/Troysps)  
