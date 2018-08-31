@@ -12,7 +12,8 @@ https://www.cnblogs.com/jasonfreak/
 [catboost 调参实战](https://blog.csdn.net/linxid/article/details/80723811)  
 [catboost pyhton tutorial](https://github.com/catboost/tutorials/blob/master/catboost_python_tutorial.ipynb)  
 [kearas 中文文档](http://keras-cn.readthedocs.io/en/latest/)  
-
+## 比赛经验  
+https://blog.csdn.net/shine19930820/article/details/53995369
 # 机器学习
 ## 入门项目收集  
 1.[数据清洗项目](https://github.com/ksyooh/twitter-data-wrangle )        
