@@ -36,7 +36,8 @@ https://blog.csdn.net/shine19930820/article/details/53995369
 10.[Tencent2018_Lookalike](https://github.com/wanlida/2018-Tencent-social-advertising-algorithm-contest)  
 11.[kaggle competition](https://github.com/SudalaiRajkumar/Kaggle)   
 12.[JDATA第七名代码](https://github.com/duxuhao/JData-2018)  
-13.[国家电投叶片开裂故障预警](https://github.com/whoami-zy/fault-forecast)
+13.[国家电投叶片开裂故障预警](https://github.com/whoami-zy/fault-forecast)  
+14.[腾讯相似人群]https://github.com/keyunluo/Tencent2018_Lookalike_Rank10th
 ## 队伍成员，以及大佬的的的github  
 [@jlinbb](https://github.com/jlinbb)  
 [@Troysps](https://github.com/Troysps)  
