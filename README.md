@@ -47,6 +47,7 @@ https://blog.csdn.net/shine19930820/article/details/53995369
 2.[ML-examples](https://github.com/wanlida/ML-examples)  
 3.[predict-next-purchase](https://github.com/Featuretools/predict-next-purchase)   
 4.[Feature_Engineering_and_XGBoost_Parameter_Tuning](https://github.com/HanXiaoyang/Feature_Engineering_and_XGBoost_Parameter_Tuning)  
+5.[目标检测代码案例基于caffe](https://github.com/makefile/frcnn)
 # JAVA JVAWEB教程
 https://github.com/shekhargulati/java8-the-missing-tutorial  
 https://github.com/winterbe/java8-tutorial    
