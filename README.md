@@ -120,7 +120,8 @@ http://www.saylor.org/
 
 ## 一个超棒的翻译器：pdf-->word 英文转中文  
 [翻译器链接](https://www.onlinedoctranslator.com/translationprocess)
-
+## google检索数据集  用于机器学习
+https://toolbox.google.com/datasetsearch 
 ## 常见的协议  
 
 简单宽松的协议
