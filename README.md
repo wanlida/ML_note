@@ -23,7 +23,9 @@ https://www.cnblogs.com/jasonfreak/
 ## 比赛经验  
 https://blog.csdn.net/shine19930820/article/details/53995369
 # 机器学习
-## 入门项目收集 比赛项目收集 
+## 入门项目收集 比赛项目收集   
+[数据挖掘进阶：kaggle竞赛top代码分享](https://zhuanlan.zhihu.com/p/26309073)  
+
 1.[数据清洗项目](https://github.com/ksyooh/twitter-data-wrangle )        
 2.[葡萄酒项目](https://elitedatascience.com/python-machine-learning-tutorial-scikit-learn?spm=a2c4e.11153940.blogcont221708.10.4c20762310eyBO)  
 3.[apachenCN](https://github.com/apachecn/organization)    
