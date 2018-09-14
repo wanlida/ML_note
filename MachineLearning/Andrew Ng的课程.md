@@ -1,9 +1,9 @@
 # 机器学习
-## [机器学习 author:Andrew Ng  课程链接](https://www.coursera.org/learn/machine-learning)  
-##[机器学习入门 配套的作业](https://github.com/fengdu78/Coursera-ML-AndrewNg-Notes)
+## [机器学习 author:Andrew Ng  课程链接](https://www.coursera.org/learn/machine-learning)[机器学习入门 配套的作业](https://github.com/fengdu78/Coursera-ML-AndrewNg-Notes)  
+
 ------
 # 深度学习  
-## CS230深度学习    author:Andrew Ng
+## CS230深度学习    author:Andrew Ng [CS230 配套作业](https://github.com/cs230-stanford/cs230-code-examples)  
 ### 课程1 [Neural Networks and Deep Learning 链接](https://www.coursera.org/learn/neural-networks-deep-learning)
 ### 课程2 [Improving Deep Neural Networks 链接](https://www.coursera.org/learn/deep-neural-network)
 ### 课程3 [Structuring Machine Learning Projects 链接](https://www.coursera.org/learn/machine-learning-projects)
@@ -13,7 +13,6 @@
 [Sequence Models week1 链接](https://www.youtube.com/watch?v=yEfsDHymL0w&list=PLZnyIsit9AM7yeTZuBmezKNc6hFHUPImh)  
 [Sequence Models week2 链接](https://www.youtube.com/watch?v=YgpI2aROLlo&list=PLZnyIsit9AM7HBPn6m06ddzw_N9zGk--2)  
 [Sequence Models week3 链接](https://www.youtube.com/watch?v=186rxP6qfJA&list=PLZnyIsit9AM7VI4ylALdbeS93i-nonUzZ)  
-### [CS230 配套作业](https://github.com/cs230-stanford/cs230-code-examples)
 --------
 ## [斯坦福 CS231n 课程 Convolutional Neural Networks for Visual Recognition 链接](http://cs231n.stanford.edu/)
 ## [CS231n 配套作业](https://github.com/cs231n/cs231n.github.io)
