@@ -1,5 +1,6 @@
 # 机器学习
-## [机器学习 author:Andrew Ng  课程链接](https://www.coursera.org/learn/machine-learning)[机器学习入门 配套的作业](https://github.com/fengdu78/Coursera-ML-AndrewNg-Notes)  
+## [机器学习 author:Andrew Ng  课程链接](https://www.coursera.org/learn/machine-learning)  
+## [机器学习入门 配套的作业](https://github.com/fengdu78/Coursera-ML-AndrewNg-Notes)  
 
 ------
 # 深度学习  
