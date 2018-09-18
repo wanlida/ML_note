@@ -27,3 +27,7 @@
 -----
 # 业余爱好 杂书  
 ## [machine-learning-yearning-cn book of Andrew Ng](https://accepteddoge.github.io/machine-learning-yearning-cn/)
+
+## 视频 吴恩达-人工智能是科学技术进步新助力  
+https://mp.weixin.qq.com/s/C1Qi29_RpYHLG2nW6LxLmA
+
