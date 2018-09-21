@@ -8,8 +8,8 @@
 ```
 ## 博客收集
 https://antkillerfarm.github.io/  
-https://www.cnblogs.com/jasonfreak/
-[kaggle 融合 导论](https://mlwave.com/kaggle-ensembling-guide/)
+https://www.cnblogs.com/jasonfreak/  
+[kaggle 融合 导论](https://mlwave.com/kaggle-ensembling-guide/)  
 [https://www.pyimagesearch.com/](https://www.pyimagesearch.com/)
 ## github 常用操作  
 [w3c git_guide](http://www.runoob.com/w3cnote/git-guide.html)  
