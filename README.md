@@ -9,6 +9,8 @@
 ## 博客收集
 https://antkillerfarm.github.io/  
 https://www.cnblogs.com/jasonfreak/
+[kaggle 融合 导论](https://mlwave.com/kaggle-ensembling-guide/)
+[https://www.pyimagesearch.com/](https://www.pyimagesearch.com/)
 ## github 常用操作  
 [w3c git_guide](http://www.runoob.com/w3cnote/git-guide.html)  
 [我的git常用命令](https://github.com/wanlida/ML_note/blob/master/github/github_use_code.md)      
@@ -39,7 +41,9 @@ https://blog.csdn.net/shine19930820/article/details/53995369
 11.[kaggle competition](https://github.com/SudalaiRajkumar/Kaggle)   
 12.[JDATA第七名代码](https://github.com/duxuhao/JData-2018)  
 13.[国家电投叶片开裂故障预警](https://github.com/whoami-zy/fault-forecast)  
-14.[腾讯相似人群]https://github.com/keyunluo/Tencent2018_Lookalike_Rank10th
+14.[腾讯相似人群]https://github.com/keyunluo/Tencent2018_Lookalike_Rank10th  
+15.[Data Fountain光伏发电量预测 Top1 开源分享](https://zhuanlan.zhihu.com/p/44755488?utm_source=wechat_session&utm_medium=social&utm_oi=623925402599559168&from=singlemessage&isappinstalled=0&wechatShare=1)
+16.[Tensorflow seq2seq Implementation of Text Summarization.](https://github.com/dongjun-Lee/text-summarization-tensorflow)
 ## 队伍成员，以及大佬的的的github  
 [@jlinbb](https://github.com/jlinbb)  
 [@Troysps](https://github.com/Troysps)  
