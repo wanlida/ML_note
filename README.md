@@ -44,6 +44,36 @@ https://blog.csdn.net/shine19930820/article/details/53995369
 14.[腾讯相似人群]https://github.com/keyunluo/Tencent2018_Lookalike_Rank10th  
 15.[Data Fountain光伏发电量预测 Top1 开源分享](https://zhuanlan.zhihu.com/p/44755488?utm_source=wechat_session&utm_medium=social&utm_oi=623925402599559168&from=singlemessage&isappinstalled=0&wechatShare=1)
 16.[Tensorflow seq2seq Implementation of Text Summarization.](https://github.com/dongjun-Lee/text-summarization-tensorflow)
+## 2018腾讯算法大赛
+```
+rank 3:
+https://github.com/DiligentPanda/Tencent_Ads_Algo_2018s
+rank 4 :
+https://zhuanlan.zhihu.com/p/42089584
+rank6: 渣大
+https://zhuanlan.zhihu.com/p/38443751
+https://github.com/nzc/tencent-contest
+rank 7: 郭大，郭雅达
+https://github.com/guoday/Tencent2018_Lookalike_Rank7th
+rank 9:
+https://github.com/ouwenjie03/tencent-ad-game
+https://zhuanlan.zhihu.com/p/38499275
+rank 11: 
+https://zhuanlan.zhihu.com/p/38034501
+https://github.com/liupengsay/2018-Tencent-social-advertising-algorithm-contest/tree/master/%E5%84%BF%E9%A1%BB%E6%88%90%E5%90%8D%E9%85%92%E9%A1%BB%E9%86%89_v2
+rank19:
+https://zhuanlan.zhihu.com/p/38628579
+
+其他：
+https://zhuanlan.zhihu.com/p/38258913
+https://zhuanlan.zhihu.com/p/40479648
+
+Ti-one:
+https://zhuanlan.zhihu.com/p/39486410
+NNFM   杨毅同学
+FM， FFM，DeepFM介绍
+FFM
+```
 ## 队伍成员，以及大佬的的的github  
 [@jlinbb](https://github.com/jlinbb)  
 [@Troysps](https://github.com/Troysps)  
