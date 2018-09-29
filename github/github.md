@@ -9,8 +9,8 @@ windows环境下安装了github后，配置git
  - Windows打开Git Bash，Mac & Linux打开普通终端即可。执行以下命令：
  - 后面的有户名和邮箱请替换为自己的  
 ```sh
-$ git config --global user.name "wanlida"  
-$ git config --global user.email 914674505@qq.com
+$ git config --global user.name "name"  
+$ git config --global user.email XXXXXXXX@qq.com
 ```
    
  
@@ -21,7 +21,7 @@ $ git config --global user.email 914674505@qq.com
 # cd进入自己用户目录下  # Windows用户  
 $ cd C:/Users/michaelx  # Mac & Linux用户  
 $ cd ~ # 生成一对ssh钥匙：公钥和密钥。  
-$ ssh-keygen -t rsa -b 4096 -C  "michaelx@michaelx.tech"  # 接着几个回车即可。cd进入.ssh目录  
+$ ssh-keygen -t rsa -b 4096 -C  "XXXXXXXXX@michaelx.tech"  # 接着几个回车即可。cd进入.ssh目录  
 $ ssh-add id_rsa # 将.ssh下的id_rsa.pub公钥文件用编辑器或者vim打开，command/Ctrl + C复制里面的所有文本内容到粘贴板
 ```
     打开你的个人中心的公钥访问设置：[SSH and GPG keys](https://github.com/settings/keys)  
