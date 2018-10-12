@@ -135,6 +135,7 @@ https://github.com/in28minutes/JavaWebApplicationStepByStep
 ----
 ### 自己搭建vpn梯子 [vpn梯子教程](https://juejin.im/post/5b665a51f265da0f7d4f1ab3)   
 ### [ss账号资源地址](https://plus.google.com/communities/104092405342699579599)
+### ss客户端下载地址 http://shadowsocks.org/en/download/clients.html  
 ### [下载赛风3的网站](https://s3.amazonaws.com/psiphon/web/60l3-nnss-6gsn/zh/download.html#direct)  
 
 ## free mooc  10个
